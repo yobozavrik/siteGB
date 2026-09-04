@@ -22,9 +22,8 @@ const Header = () => {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-stone-950/90 text-white backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between gap-6">
-        <Link to="/" className="flex items-center gap-3" aria-label="Галя Балувана — на головну">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-primary font-black text-xs">ГБ</span>
-          <span className="leading-4 text-sm font-bold">Галя<br />Балувана</span>
+        <Link to="/" className="flex items-center" aria-label="Галя Балувана — на головну">
+          <img src="/logo.svg" alt="Галя Балувана" width="200" height="40" className="h-9 w-auto" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-6">

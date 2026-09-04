@@ -33,7 +33,9 @@
 | Питання-відповіді на головній | `src/data/faq.ts` |
 | Статті «Рецепти та поради» | `src/data/blogPosts.ts` |
 | SEO-сторінки під міста / запити | `src/data/landingPages.ts` |
+| Логотип | `public/logo.svg` — заміни на офіційний файл франшизи (той самий шлях, бажано білий варіант для темної шапки) |
 | Тексти секцій головної | `src/components/GalyaSections.tsx`, `HeroSection.tsx` |
+| Мережеві числа (700 / 9000 / 200) | `src/config/site.ts` → `NETWORK_STATS` |
 | Тексти «Про нас» | `src/pages/AboutPage.tsx` |
 | Промо-рядок під шапкою | зараз нема окремого — у `HeroSection`/шапці |
 | `<title>` / опис головної для Google | `src/pages/Index.tsx` (компонент `<SEO>`) та `index.html` |

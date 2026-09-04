@@ -39,10 +39,7 @@ const Footer = () => (
   <footer className="bg-stone-950 text-white border-t border-white/10 px-6 py-14">
     <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div>
-        <div className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-primary font-black text-xs">ГБ</span>
-          <span className="leading-4 text-sm font-bold">Галя<br />Балувана</span>
-        </div>
+        <img src="/logo.svg" alt="Галя Балувана" width="200" height="40" className="h-9 w-auto" />
         <p className="mt-5 text-sm text-white/55 max-w-xs">{BRAND_TAGLINE}.</p>
         <div className="mt-5 space-y-1 text-sm text-white/70">
           <a href={`tel:${PHONE}`} className="block hover:text-white">{PHONE_DISPLAY}</a>

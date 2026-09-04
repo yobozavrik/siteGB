@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60" role="img" aria-label="Галя Балувана">
+  <!-- Placeholder mark — replace public/logo.svg with the official franchise logo (same path). -->
+  <g>
+    <circle cx="30" cy="30" r="26" fill="#B4232E"/>
+    <!-- stylised pierogi -->
+    <path d="M18 33c0-8 6-14 12-14s12 6 12 14c0 2-1 3-3 3H21c-2 0-3-1-3-3z" fill="#FFFDF8"/>
+    <path d="M20 33h20" stroke="#B4232E" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M22 30l2 2 2-2 2 2 2-2 2 2 2-2 2 2 2-2 2 2 2-2" fill="none" stroke="#B4232E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="70" y="27" font-family="'Unbounded','Arial Black',system-ui,sans-serif" font-size="19" font-weight="800" letter-spacing="0.5" fill="#FFFDF8">ГАЛЯ</text>
+  <text x="70" y="49" font-family="'Unbounded','Arial Black',system-ui,sans-serif" font-size="19" font-weight="800" letter-spacing="0.5" fill="#F0B45A">БАЛУВАНА</text>
+</svg>
