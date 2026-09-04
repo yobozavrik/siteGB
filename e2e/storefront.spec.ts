@@ -11,7 +11,7 @@ test.describe("storefront", () => {
   test("primary navigation reaches every top-level page", async ({ page }) => {
     for (const path of [
       "/menu",
-      "/menu/vareniki",
+      "/menu/mlyntsi-vareniki",
       "/product/vareniki-z-vyshneyu",
       "/delivery",
       "/shops",
@@ -39,7 +39,7 @@ test.describe("storefront", () => {
   });
 
   test("catalogue mode: no prices, no cart, /cart redirects to /menu", async ({ page }) => {
-    await page.goto("/menu/vareniki");
+    await page.goto("/menu/mlyntsi-vareniki");
     await expect(page.getByText("₴")).toHaveCount(0);
     await expect(page.getByRole("link", { name: /кошик/i })).toHaveCount(0);
     await page.goto("/cart");

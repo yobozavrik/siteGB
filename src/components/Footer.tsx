@@ -1,23 +1,21 @@
 import { Link } from "react-router-dom";
 import { BRAND_TAGLINE, PHONE_DISPLAY, PHONE, EMAIL, SOCIALS, WORK_HOURS } from "@/config/site";
+import { categoriesSorted } from "@/data/catalog";
 
 const columns = [
   {
     title: "Меню",
     links: [
       { label: "Усі категорії", to: "/menu" },
-      { label: "Вареники", to: "/menu/vareniki" },
-      { label: "Пельмені та хінкалі", to: "/menu/pelmeni" },
-      { label: "Млинці", to: "/menu/mlyntsi" },
-      { label: "Пироги та штруделі", to: "/menu/pyrohy" },
+      ...categoriesSorted.slice(0, 5).map((c) => ({ label: c.title, to: `/menu/${c.slug}` })),
     ],
   },
   {
     title: "Клієнту",
     links: [
-      { label: "Доставка та оплата", to: "/delivery" },
       { label: "Магазини", to: "/shops" },
-      { label: "Рецепти та поради", to: "/blog" },
+      { label: "Блог", to: "/blog" },
+      { label: "Зворотній зв'язок", to: "/contacts" },
       { label: "Франшиза", to: "/franchise" },
     ],
   },
@@ -25,9 +23,16 @@ const columns = [
     title: "Про нас",
     links: [
       { label: "Кухня за склом", to: "/about" },
-      { label: "Контакти", to: "/contacts" },
+      { label: "Доставка та оплата", to: "/delivery" },
     ],
   },
+];
+
+const socials = [
+  { label: "Instagram", href: SOCIALS.instagram },
+  { label: "Facebook", href: SOCIALS.facebook },
+  { label: "YouTube", href: SOCIALS.youtube },
+  { label: "Telegram", href: SOCIALS.telegram },
 ];
 
 const Footer = () => (
@@ -38,16 +43,18 @@ const Footer = () => (
           <span className="grid h-10 w-10 place-items-center rounded-full bg-primary font-black text-xs">ГБ</span>
           <span className="leading-4 text-sm font-bold">Галя<br />Балувана</span>
         </div>
-        <p className="mt-5 text-sm text-white/55 max-w-xs">{BRAND_TAGLINE}. Київ і область, доставка по Україні.</p>
+        <p className="mt-5 text-sm text-white/55 max-w-xs">{BRAND_TAGLINE}.</p>
         <div className="mt-5 space-y-1 text-sm text-white/70">
           <a href={`tel:${PHONE}`} className="block hover:text-white">{PHONE_DISPLAY}</a>
           <a href={`mailto:${EMAIL}`} className="block hover:text-white">{EMAIL}</a>
           <p className="text-white/45">{WORK_HOURS}</p>
         </div>
-        <div className="mt-5 flex gap-4 text-sm text-white/70">
-          <a href={SOCIALS.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">Instagram</a>
-          <a href={SOCIALS.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-white">Facebook</a>
-          <a href={SOCIALS.telegram} target="_blank" rel="noopener noreferrer" className="hover:text-white">Telegram</a>
+        <div className="mt-5 flex flex-wrap gap-4 text-sm text-white/70">
+          {socials.map((s) => (
+            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              {s.label}
+            </a>
+          ))}
         </div>
       </div>
 

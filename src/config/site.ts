@@ -20,9 +20,17 @@ export const FRANCHISE_EMAIL = "partner@galya-baluvana.ua";
 export const SOCIALS = {
   instagram: "https://www.instagram.com/galya.baluvana/",
   facebook: "https://www.facebook.com/galyabaluvana/",
+  youtube: "https://www.youtube.com/@galyabaluvana",
   telegram: "https://t.me/galyabaluvana",
   viber: "viber://chat?number=%2B380732000047",
 } as const;
+
+/** Network-level figures shown on the home stats block (as on galia-baluvana.com). */
+export const NETWORK_STATS = [
+  { value: "700+", label: "магазинів в Україні" },
+  { value: "9000", label: "робочих місць" },
+  { value: "200+", label: "різноманітних страв" },
+] as const;
 
 /** Shown on the storefront; individual shops may differ (see src/data/shops.ts). */
 export const WORK_HOURS = "Щодня 09:00–21:00";

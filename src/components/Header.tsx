@@ -5,12 +5,11 @@ import { useCart } from "@/context/CartContext";
 import { SHOW_PRICES } from "@/config/site";
 
 const nav = [
-  { label: "Меню", to: "/menu" },
-  { label: "Доставка", to: "/delivery" },
   { label: "Магазини", to: "/shops" },
-  { label: "Про нас", to: "/about" },
+  { label: "Меню", to: "/menu" },
   { label: "Блог", to: "/blog" },
-  { label: "Контакти", to: "/contacts" },
+  { label: "Зворотній зв'язок", to: "/contacts" },
+  { label: "Франшиза", to: "/franchise" },
 ];
 
 const Header = () => {

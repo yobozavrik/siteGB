@@ -6,6 +6,7 @@ import {
   MenuSection,
   HitsSection,
   WhySection,
+  StatsSection,
   ProcessShowcase,
   ShopsSection,
   BlogSection,
@@ -88,9 +89,10 @@ const Index = () => (
     }
   >
     <HeroSection />
-    <MenuSection />
     <HitsSection />
+    <MenuSection />
     <WhySection />
+    <StatsSection />
     <ProcessShowcase />
     <ShopsSection />
     <BlogSection />

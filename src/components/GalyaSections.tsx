@@ -16,7 +16,7 @@ import { categoriesSorted, productsByCategory, activeProducts, pricePer100g, pro
 import { blogPosts } from "@/data/blogPosts";
 import { totalShops, totalCities, productionShops } from "@/data/shops";
 import { useCart } from "@/context/CartContext";
-import { SHOW_PRICES } from "@/config/site";
+import { SHOW_PRICES, NETWORK_STATS } from "@/config/site";
 import heroFood from "@/assets/galya-hero-food.png";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -104,11 +104,11 @@ export const HitsSection = () => {
   const { addItem } = useCart();
   const hits = activeProducts.filter((p) => p.tags.includes("hit")).slice(0, 3);
   if (hits.length === 0) return null;
-  const eyebrow = SHOW_PRICES ? "Хіти тижня" : "Популярне";
+  const eyebrow = "Популярні страви";
   const heading = SHOW_PRICES ? "Беруть найчастіше" : "Обирають найчастіше";
 
   return (
-    <section className="section-padding relative overflow-hidden pt-0">
+    <section className="section-padding relative overflow-hidden">
       <div className="relative mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -187,10 +187,9 @@ export const HitsSection = () => {
 /* ------------------------------------------------------------- Why we ---- */
 
 const reasons = [
-  { icon: ChefHat, title: "Відкрите виробництво", desc: "Цех працює за склом просто в торговому залі — видно кожен етап." },
-  { icon: Hand, title: "Ручна ліпка", desc: "Тісто розкачуємо й защипуємо руками, без форм і автоматів." },
-  { icon: Leaf, title: "Натуральний склад", desc: "Без сої, консервантів і замінників жиру. Лише прості продукти." },
-  { icon: Snowflake, title: "Свіже щодня", desc: "Ліпимо зранку, термін зберігання — до 30 діб, а не пів року." },
+  { icon: Leaf, title: "Якість", desc: "Тісто й начинки з простих продуктів, без сої, консервантів і замінників жиру." },
+  { icon: ChefHat, title: "Асортимент", desc: "Понад 200 страв: вареники, пельмені, млинці, котлети, піца, випічка, готові страви." },
+  { icon: Hand, title: "Відкрите виробництво", desc: "Цех працює за склом просто в торговому залі — видно кожен етап ручної ліпки." },
 ];
 
 export const WhySection = () => (
@@ -204,7 +203,7 @@ export const WhySection = () => (
         transition={{ duration: 0.8, ease }}
         className="mb-14 text-center"
       >
-        <Eyebrow>Чому саме ми</Eyebrow>
+        <Eyebrow>Чому Галя Балувана</Eyebrow>
         <h2 className="text-4xl font-black md:text-5xl">
           Смак, який збирає рідних за <span className="text-gradient-brand">одним столом</span>
         </h2>
@@ -215,7 +214,7 @@ export const WhySection = () => (
         whileInView="visible"
         viewport={{ once: true }}
         variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-        className="grid grid-cols-1 gap-6 md:grid-cols-2"
+        className="grid grid-cols-1 gap-6 md:grid-cols-3"
       >
         {reasons.map((r) => (
           <motion.div
@@ -242,6 +241,33 @@ export const WhySection = () => (
           </motion.div>
         ))}
       </motion.div>
+    </div>
+  </section>
+);
+
+/* --------------------------------------------------------------- Stats ---- */
+
+export const StatsSection = () => (
+  <section className="section-padding relative overflow-hidden bg-stone-950 text-white">
+    <div className="section-accent absolute inset-0 opacity-20" />
+    <div className="relative mx-auto max-w-5xl">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease }}
+        className="grid grid-cols-1 gap-8 text-center sm:grid-cols-3"
+      >
+        {NETWORK_STATS.map((s) => (
+          <div key={s.label}>
+            <div className="font-mono text-5xl font-black text-gradient-brand md:text-6xl">{s.value}</div>
+            <div className="mt-2 text-sm text-white/60">{s.label}</div>
+          </div>
+        ))}
+      </motion.div>
+      <p className="relative mt-6 text-center text-xs text-white/40">
+        Дані національної мережі «Галя Балувана».
+      </p>
     </div>
   </section>
 );
