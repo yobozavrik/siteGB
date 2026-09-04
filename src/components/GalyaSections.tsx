@@ -17,7 +17,6 @@ import { blogPosts } from "@/data/blogPosts";
 import { totalShops, totalCities, productionShops } from "@/data/shops";
 import { useCart } from "@/context/CartContext";
 import { SHOW_PRICES, NETWORK_STATS } from "@/config/site";
-import heroFood from "@/assets/galya-hero-food.png";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -305,8 +304,9 @@ export const ProcessShowcase = () => (
           className="group relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-square"
         >
           <img
-            src={heroFood}
+            src="/img/why-galya.jpg"
             alt="Виробництво напівфабрикатів за склом"
+            loading="lazy"
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent" />
