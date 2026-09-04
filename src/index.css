@@ -71,29 +71,45 @@
 
 @layer components {
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-border/30 rounded-2xl;
-    box-shadow: 0 20px 50px -12px rgba(0,0,0,0.5);
+    @apply bg-card/70 backdrop-blur-xl border border-border/60 rounded-2xl;
+    box-shadow: 0 24px 60px -28px rgba(42, 33, 27, 0.35);
   }
 
   .glass-surface {
-    @apply bg-card/40 backdrop-blur-md border border-border/20 rounded-xl;
+    @apply bg-card/50 backdrop-blur-md border border-border/40 rounded-xl;
   }
 
+  /* Warm-palette glows (class names kept for compatibility). */
   .glow-green {
-    box-shadow: 0 0 40px rgba(124, 204, 33, 0.2), 0 0 80px rgba(124, 204, 33, 0.08);
+    box-shadow: 0 0 44px hsl(var(--apple) / 0.22), 0 0 90px hsl(var(--apple) / 0.1);
   }
 
   .glow-orange {
-    box-shadow: 0 0 40px rgba(245, 158, 11, 0.2), 0 0 80px rgba(245, 158, 11, 0.08);
+    box-shadow: 0 0 44px hsl(var(--secondary) / 0.28), 0 0 90px hsl(var(--secondary) / 0.12);
   }
 
   .glow-pink {
-    box-shadow: 0 0 40px rgba(210, 100, 120, 0.2), 0 0 80px rgba(210, 100, 120, 0.08);
+    box-shadow: 0 0 44px hsl(var(--primary) / 0.24), 0 0 90px hsl(var(--primary) / 0.1);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 44px hsl(var(--primary) / 0.28), 0 0 100px hsl(var(--primary) / 0.12);
+  }
+
+  .glow-warm {
+    box-shadow: 0 0 44px hsl(var(--secondary) / 0.3), 0 0 100px hsl(var(--secondary) / 0.14);
   }
 
   .text-gradient-brand {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--secondary)));
+  }
+
+  /* Faint radial accent behind marketing sections. */
+  .section-accent {
+    background-image:
+      radial-gradient(circle at 18% 22%, hsl(var(--primary)) 0%, transparent 55%),
+      radial-gradient(circle at 82% 78%, hsl(var(--secondary)) 0%, transparent 55%);
   }
 
   .section-padding {

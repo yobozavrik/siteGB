@@ -1,58 +1,94 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import heroFood from "@/assets/galya-hero-food.png";
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 const HeroSection = () => (
-  <section className="relative flex min-h-[640px] items-center overflow-hidden bg-stone-950 text-white">
-    <img
-      src={heroFood}
-      alt="Домашні напівфабрикати ручного ліплення"
-      className="absolute inset-0 h-full w-full object-cover object-center opacity-80"
-      fetchPriority="high"
-    />
-    <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/10" />
-    <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-16">
+  <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0, scale: 1.08 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.6, ease }}
+      className="absolute inset-0"
+    >
+      <img
+        src={heroFood}
+        alt="Домашні напівфабрикати ручного ліплення — Галя Балувана"
+        width={1536}
+        height={1024}
+        fetchPriority="high"
+        decoding="async"
+        className="h-full w-full object-cover object-center"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-stone-950/85 via-stone-950/60 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+    </motion.div>
+
+    <div className="relative z-10 mx-auto max-w-5xl px-6 pt-24 text-center">
       <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-5 text-sm font-bold uppercase tracking-[.28em] text-red-300"
+        initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1, ease, delay: 0.2 }}
+        className="mb-4 text-sm font-black uppercase tracking-[0.4em] text-primary-foreground/90"
+        style={{ textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}
       >
         Домашні напівфабрикати
       </motion.p>
+
       <motion.h1
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="max-w-3xl text-5xl font-black leading-[.95] tracking-tight md:text-7xl"
+        initial={{ opacity: 0, y: 40, scale: 0.94 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 1, ease, delay: 0.4 }}
+        className="text-5xl font-black leading-[0.95] tracking-tight text-white md:text-7xl lg:text-8xl"
+        style={{ textShadow: "0 6px 44px rgba(0,0,0,0.7), 0 0 100px rgba(0,0,0,0.45)" }}
       >
-        Приділіть свій час <span className="text-red-300">коханим</span>
+        Приділіть свій час
+        <br />
+        <span className="text-gradient-brand" style={{ textShadow: "none" }}>коханим</span>
       </motion.h1>
+
       <motion.p
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="mt-7 max-w-xl text-lg leading-relaxed text-white/75"
+        transition={{ duration: 0.6, ease, delay: 0.9 }}
+        className="mx-auto mt-6 max-w-2xl text-base text-white/80 md:text-lg"
+        style={{ textShadow: "0 2px 14px rgba(0,0,0,0.6)" }}
       >
-        А про смачні домашні страви подбала Галя Балувана. Ліпимо руками, щодня, у вас на очах.
+        А про смачні домашні страви подбала Галя Балувана. Тісто розкачуємо й защипуємо
+        руками — щодня, у вас на очах.
       </motion.p>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="mt-9 flex flex-wrap gap-4"
+        transition={{ duration: 0.6, ease, delay: 1.1 }}
+        className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
       >
-        <Link to="/menu" className="rounded-full bg-primary px-7 py-4 font-bold transition-colors hover:brightness-110">
+        <Link
+          to="/menu"
+          className="glow-primary rounded-full bg-primary px-12 py-4 text-lg font-bold text-primary-foreground transition-all hover:brightness-110 active:scale-95"
+        >
           Переглянути меню
         </Link>
-        <Link to="/shops" className="rounded-full border border-white/45 px-7 py-4 font-bold transition-colors hover:bg-white/10">
-          Знайти магазин
-        </Link>
+        <a
+          href="#menu"
+          className="flex items-center gap-2 font-medium text-white/70 transition-colors hover:text-white"
+        >
+          <ChevronDown className="h-5 w-5 animate-bounce" />
+          Дізнатись більше
+        </a>
       </motion.div>
     </div>
-    <a href="#menu" aria-label="До меню" className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-white/70">
-      <ArrowDown className="animate-bounce" />
-    </a>
+
+    <motion.div
+      animate={{ y: [0, 8, 0] }}
+      transition={{ repeat: Infinity, duration: 2 }}
+      className="absolute bottom-8 left-1/2 -translate-x-1/2"
+    >
+      <ChevronDown className="h-8 w-8 text-white/40" />
+    </motion.div>
   </section>
 );
 
