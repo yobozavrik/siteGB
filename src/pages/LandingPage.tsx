@@ -6,8 +6,8 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import SEO from "@/components/SEO";
 import { getLandingBySlug, landingPages } from "@/data/landingPages";
+import { SITE_URL } from "@/config/site";
 
-const SITE_URL = "https://kratea-official.com";
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const LandingPage = () => {
@@ -44,7 +44,7 @@ const LandingPage = () => {
       description: page.description,
       url,
       inLanguage: "uk-UA",
-      isPartOf: { "@type": "WebSite", name: "KRATEA", url: SITE_URL },
+      isPartOf: { "@type": "WebSite", name: "Галя Балувана", url: SITE_URL },
     },
     {
       "@context": "https://schema.org",
@@ -121,9 +121,9 @@ const LandingPage = () => {
 
           <div className="mt-12 glass-card p-8 text-center">
             <h2 className="text-2xl font-bold mb-3">{page.ctaText}</h2>
-            <p className="text-foreground/60 mb-6">Натуральні функціональні напої з доставкою по всій Україні. 199₴ за банку.</p>
-            <Link to="/#products" className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition">
-              Обрати смак
+            <p className="text-foreground/60 mb-6">Домашні напівфабрикати ручного ліплення — доставка та самовивіз.</p>
+            <Link to="/menu" className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition">
+              Перейти до меню
             </Link>
           </div>
 

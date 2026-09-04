@@ -1,8 +1,96 @@
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import Footer from "@/components/Footer";
-import CartDrawer from "@/components/CartDrawer";
+import SiteLayout from "@/components/SiteLayout";
 import SEO from "@/components/SEO";
-import { MenuSection, WhySection, ShopsSection, BlogSection, FeedbackSection, FranchiseSection } from "@/components/GalyaSections";
-const Index = () => <div className="min-h-screen bg-background"><SEO title="Галя Балувана — домашні напівфабрикати" description="Домашні напівфабрикати: оберіть місто, перегляньте меню та знайдіть найближчий магазин." path="/" /><Header /><CartDrawer /><main><HeroSection /><MenuSection /><WhySection /><ShopsSection /><BlogSection /><FeedbackSection /><FranchiseSection /></main><Footer /></div>;
+import HeroSection from "@/components/HeroSection";
+import FAQSection from "@/components/FAQSection";
+import {
+  MenuSection,
+  HitsSection,
+  WhySection,
+  ShopsSection,
+  BlogSection,
+  FeedbackSection,
+  FranchiseSection,
+} from "@/components/GalyaSections";
+import { faqItems } from "@/data/faq";
+import { activeProducts } from "@/data/catalog";
+import { SITE_URL, BRAND, PHONE } from "@/config/site";
+
+const featured = activeProducts.filter((p) => p.tags.includes("hit")).slice(0, 3);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: BRAND,
+    url: SITE_URL,
+    logo: `${SITE_URL}/favicon.png`,
+    description: "Магазин домашніх напівфабрикатів ручного ліплення.",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: BRAND,
+    url: SITE_URL,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    name: BRAND,
+    servesCuisine: "Ukrainian",
+    url: SITE_URL,
+    image: `${SITE_URL}/og-image.jpg`,
+    telephone: PHONE,
+    priceRange: "₴₴",
+    address: { "@type": "PostalAddress", addressCountry: "UA", addressLocality: "Київ" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+  ...featured.map((p) => ({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.title,
+    description: p.composition,
+    image: `${SITE_URL}${p.images[0]}`,
+    category: p.categorySlug,
+    offers: {
+      "@type": "Offer",
+      price: p.priceUAH,
+      priceCurrency: "UAH",
+      availability: "https://schema.org/InStock",
+      url: `${SITE_URL}/product/${p.slug}`,
+    },
+  })),
+];
+
+const Index = () => (
+  <SiteLayout
+    offsetHeader={false}
+    seo={
+      <SEO
+        title="Галя Балувана — домашні напівфабрикати ручного ліплення"
+        description="Вареники, пельмені, млинці, сирники ручного ліплення. Меню з цінами, доставка та самовивіз, карта магазинів по Україні."
+        path="/"
+        jsonLd={jsonLd}
+      />
+    }
+  >
+    <HeroSection />
+    <MenuSection />
+    <HitsSection />
+    <WhySection />
+    <ShopsSection />
+    <BlogSection />
+    <FAQSection />
+    <FeedbackSection />
+    <FranchiseSection />
+  </SiteLayout>
+);
+
 export default Index;

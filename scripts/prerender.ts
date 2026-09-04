@@ -1,14 +1,15 @@
-// Postbuild: generate per-route static HTML files in dist/ so Googlebot
-// sees correct <title>, <meta description>, canonical, OG tags, and
-// above-the-fold content WITHOUT executing JavaScript.
-// React hydrates over the static HTML once JS loads.
+// Postbuild: generate per-route static HTML files in dist/ so crawlers see the
+// correct <title>, <meta description>, canonical, OG tags and above-the-fold
+// heading WITHOUT executing JavaScript. React hydrates over it once JS loads.
+// Also emits dist/sitemap.xml from the full route list.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, dirname } from "path";
 import { blogPosts } from "../src/data/blogPosts";
 import { landingPages } from "../src/data/landingPages";
+import { categoriesSorted, activeProducts } from "../src/data/catalog";
 
-const BASE_URL = "https://kratea-official.com";
+const BASE_URL = (process.env.VITE_SITE_URL || "https://galya-baluvana.vercel.app").replace(/\/$/, "");
 const DIST = resolve("dist");
 const SHELL_PATH = resolve(DIST, "index.html");
 
@@ -20,7 +21,7 @@ if (!existsSync(SHELL_PATH)) {
 const shell = readFileSync(SHELL_PATH, "utf-8");
 
 interface Route {
-  path: string; // "/about", "/blog/foo", "/"
+  path: string;
   title: string;
   description: string;
   h1: string;
@@ -30,62 +31,90 @@ interface Route {
 const staticRoutes: Route[] = [
   {
     path: "/",
-    title: "KRATEA — Функціональні напої | Power of Nature",
+    title: "Галя Балувана — домашні напівфабрикати ручного ліплення",
     description:
-      "KRATEA — натуральні функціональні напої з кава-кава, канни та GABA. Енергія, спокій та гармонія від GoldProduct.",
-    h1: "KRATEA — функціональні напої з силою природи",
+      "Вареники, пельмені, млинці, сирники ручного ліплення. Меню з цінами, доставка та самовивіз, карта магазинів по Україні.",
+    h1: "Приділіть свій час коханим",
     intro:
-      "Натуральні напої KRATEA з кава-кава, канни та GABA. М'яка енергія, фокус і спокій без цукру та синтетичного кофеїну. Доставка по всій Україні.",
+      "Домашні напівфабрикати «Галя Балувана»: тісто й начинки ручного ліплення, без сої та консервантів. Доставка по місту і самовивіз із магазину.",
+  },
+  {
+    path: "/menu",
+    title: "Меню — домашні напівфабрикати Галя Балувана",
+    description:
+      "Повне меню: вареники, пельмені, млинці, сирники, чебуреки, голубці, котлети та десерти. Ціни за упаковку і за 100 г.",
+    h1: "Меню",
+    intro: "Вісім категорій ручного ліплення з натуральних продуктів.",
+  },
+  {
+    path: "/delivery",
+    title: "Доставка та оплата — Галя Балувана",
+    description:
+      "Зони й тарифи доставки по Києву та Україні, способи оплати, умови самовивозу з магазину.",
+    h1: "Доставка та оплата",
+    intro: "Доставляємо щодня у день замовлення. Самовивіз із магазину — безкоштовно.",
+  },
+  {
+    path: "/shops",
+    title: "Магазини Галя Балувана — адреси та графік по Україні",
+    description:
+      "Магазини «Галя Балувана» у Києві, Львові, Одесі, Дніпрі, Харкові та інших містах. Адреси, години роботи, телефони.",
+    h1: "Знайдіть Галя Балувана у своєму місті",
+    intro: "Оберіть місто, щоб побачити адреси, графік і телефони магазинів.",
   },
   {
     path: "/about",
-    title: "Про KRATEA — натуральні функціональні напої від GoldProduct",
+    title: "Про нас — кухня за склом | Галя Балувана",
     description:
-      "Історія KRATEA: бренд функціональних напоїв з натуральними адаптогенами. Наша місія, склад та філософія.",
-    h1: "Про KRATEA",
+      "Домашні напівфабрикати ручного ліплення з натуральних продуктів. Виробництво працює за склом просто в магазині.",
+    h1: "Кухня за склом",
     intro:
-      "KRATEA — український бренд функціональних напоїв з натуральними адаптогенами кава-кава, канни та GABA.",
+      "Тісто розкачуємо й защипуємо руками, начинки готуємо щодня. Без сої, консервантів і замінників жиру.",
   },
   {
-    path: "/where-to-buy",
-    title: "Де купити KRATEA — магазини та доставка по Україні",
-    description:
-      "Купити KRATEA у Києві, Львові, Одесі, Харкові, Дніпрі та по всій Україні. Список партнерських магазинів та онлайн-доставка.",
-    h1: "Де купити KRATEA",
-    intro:
-      "KRATEA доступний у партнерських мережах магазинів по всій Україні, а також з онлайн-доставкою Новою Поштою.",
-  },
-  {
-    path: "/collaboration",
-    title: "Співпраця з KRATEA — оптові поставки та партнерство",
-    description:
-      "Оптові поставки KRATEA для магазинів, кафе та фітнес-клубів. Умови партнерства та форма заявки.",
-    h1: "Співпраця з KRATEA",
-    intro:
-      "Запрошуємо магазини, кафе, фітнес-клуби та дистриб'юторів до співпраці з брендом KRATEA.",
-  },
-  {
-    path: "/contact",
-    title: "Контакти KRATEA — зв'яжіться з нами",
-    description:
-      "Зв'яжіться з командою KRATEA. Телефон, email, соціальні мережі — ми на зв'язку щодня.",
+    path: "/contacts",
+    title: "Контакти — Галя Балувана",
+    description: "Телефон, пошта, соцмережі та форма зворотного зв'язку. Відповідаємо у робочі години.",
     h1: "Контакти",
-    intro: "Зв'яжіться з командою KRATEA — ми відповімо протягом дня.",
+    intro: "Зв'яжіться з нами — відповімо протягом робочого дня.",
+  },
+  {
+    path: "/franchise",
+    title: "Франшиза Галя Балувана — відкрити магазин напівфабрикатів",
+    description:
+      "Умови франшизи мережі домашніх напівфабрикатів: рецептура, обладнання, навчання, маркетинг. Залиште заявку.",
+    h1: "Відкрийте свій магазин «Галя Балувана»",
+    intro: "Формат виробництво-магазин: цех ручного ліплення за склом і вітрина з напівфабрикатами.",
   },
   {
     path: "/blog",
-    title: "Блог KRATEA — функціональні напої, адаптогени та здоров'я",
+    title: "Рецепти та поради — Галя Балувана",
     description:
-      "Статті про функціональні напої, натуральні адаптогени, кава-кава, GABA, канну та здоровий стиль життя від експертів KRATEA.",
-    h1: "Блог KRATEA",
-    intro:
-      "Корисні статті про натуральні адаптогени, функціональні напої та здоровий стиль життя.",
+      "Як готувати й зберігати домашні напівфабрикати, меню на тиждень, поради для святкового столу.",
+    h1: "Рецепти та поради",
+    intro: "Корисне про домашній смак: приготування, зберігання, планування меню.",
   },
 ];
 
+const categoryRoutes: Route[] = categoriesSorted.map((c) => ({
+  path: `/menu/${c.slug}`,
+  title: `${c.title} — Галя Балувана`,
+  description: `${c.title}: ${c.blurb} Ручне ліплення, доставка та самовивіз.`,
+  h1: c.title,
+  intro: c.blurb,
+}));
+
+const productRoutes: Route[] = activeProducts.map((p) => ({
+  path: `/product/${p.slug}`,
+  title: `${p.title} — купити, ${p.priceUAH} ₴ | Галя Балувана`,
+  description: `${p.title}, ${p.unitLabel}. ${p.composition.slice(0, 140)}`,
+  h1: p.title,
+  intro: `${p.unitLabel}. ${p.cooking}`,
+}));
+
 const blogRoutes: Route[] = blogPosts.map((p) => ({
   path: `/blog/${p.slug}`,
-  title: (p.metaTitle ?? p.title) + " | KRATEA",
+  title: `${p.metaTitle ?? p.title} — Галя Балувана`,
   description: p.description,
   h1: p.title,
   intro: p.excerpt,
@@ -99,14 +128,16 @@ const landingRoutes: Route[] = landingPages.map((p) => ({
   intro: p.intro,
 }));
 
-const all: Route[] = [...staticRoutes, ...blogRoutes, ...landingRoutes];
+const all: Route[] = [
+  ...staticRoutes,
+  ...categoryRoutes,
+  ...productRoutes,
+  ...blogRoutes,
+  ...landingRoutes,
+];
 
 function escapeHtml(s: string) {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 function renderHtml(route: Route): string {
@@ -117,17 +148,12 @@ function renderHtml(route: Route): string {
   const intro = escapeHtml(route.intro);
 
   let html = shell;
-
-  // Replace <title>
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`);
-
-  // Replace meta description
   html = html.replace(
     /<meta name="description" content="[^"]*"\s*\/?>/,
-    `<meta name="description" content="${desc}" />`
+    `<meta name="description" content="${desc}" />`,
   );
 
-  // Inject canonical + per-route OG tags right after the <title>
   const injected = `
     <link rel="canonical" href="${url}" />
     <meta property="og:title" content="${title}" />
@@ -137,14 +163,8 @@ function renderHtml(route: Route): string {
     <meta name="twitter:description" content="${desc}" />`;
   html = html.replace(/<\/title>/, `</title>${injected}`);
 
-  // Inject above-the-fold content inside #root. React's createRoot().render()
-  // replaces children on mount, so this only shows to no-JS crawlers and
-  // during the brief pre-hydration moment.
   const seoBlock = `<div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true"><h1>${h1}</h1><p>${intro}</p></div>`;
-  html = html.replace(
-    /<div id="root"><\/div>/,
-    `<div id="root">${seoBlock}</div>`
-  );
+  html = html.replace(/<div id="root"><\/div>/, `<div id="root">${seoBlock}</div>`);
 
   return html;
 }
@@ -152,13 +172,20 @@ function renderHtml(route: Route): string {
 let count = 0;
 for (const route of all) {
   const html = renderHtml(route);
-  // "/" -> dist/index.html, "/about" -> dist/about/index.html, etc.
-  const outDir =
-    route.path === "/" ? DIST : resolve(DIST, route.path.replace(/^\//, ""));
+  const outDir = route.path === "/" ? DIST : resolve(DIST, route.path.replace(/^\//, ""));
   const outFile = resolve(outDir, "index.html");
   mkdirSync(dirname(outFile), { recursive: true });
   writeFileSync(outFile, html);
   count++;
 }
 
-console.log(`[prerender] wrote ${count} static HTML files.`);
+// sitemap.xml
+const urls = ["/", ...all.filter((r) => r.path !== "/").map((r) => r.path)];
+const sitemap =
+  `<?xml version="1.0" encoding="UTF-8"?>\n` +
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  urls.map((u) => `  <url><loc>${BASE_URL}${u}</loc></url>`).join("\n") +
+  `\n</urlset>\n`;
+writeFileSync(resolve(DIST, "sitemap.xml"), sitemap);
+
+console.log(`[prerender] wrote ${count} static HTML files + sitemap.xml (${urls.length} urls).`);

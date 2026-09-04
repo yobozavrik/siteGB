@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { SITE_URL, BRAND } from "@/config/site";
 
 interface SEOProps {
   title: string;
@@ -9,7 +10,6 @@ interface SEOProps {
   jsonLd?: object | object[];
 }
 
-const SITE_URL = "https://kratea-official.com";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 const SEO = ({ title, description, path, image, type = "website", jsonLd }: SEOProps) => {
@@ -25,7 +25,7 @@ const SEO = ({ title, description, path, image, type = "website", jsonLd }: SEOP
       <link rel="alternate" hrefLang="uk-UA" href={url} />
       <link rel="alternate" hrefLang="x-default" href={url} />
       <meta property="og:locale" content="uk_UA" />
-      <meta property="og:site_name" content="KRATEA" />
+      <meta property="og:site_name" content={BRAND} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />

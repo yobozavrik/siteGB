@@ -1,5 +1,5 @@
 {
-  "name": "kratea",
+  "name": "galya-baluvana",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc -b",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -93,7 +93,7 @@
     "vite": "^5.4.19",
     "vitest": "^3.2.4"
   },
-  "description": "Kratea — Ukrainian storefront for GABA/CBD functional drinks. React 18 + Vite + Tailwind + shadcn/ui, with a Supabase backend, cart, checkout and admin panel.",
+  "description": "Галя Балувана — storefront for a Ukrainian homemade frozen-food shop. React 18 + Vite + Tailwind + shadcn/ui, with a Supabase backend, catalogue, cart, delivery/pickup checkout and admin panel.",
   "keywords": [
     "ecommerce",
     "storefront",
@@ -103,17 +103,18 @@
     "tailwindcss",
     "shadcn-ui",
     "supabase",
-    "ukraine"
+    "ukraine",
+    "food"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/STALK37/Kratea.git"
+    "url": "git+https://github.com/yobozavrik/siteGB.git"
   },
   "bugs": {
-    "url": "https://github.com/STALK37/Kratea/issues"
+    "url": "https://github.com/yobozavrik/siteGB/issues"
   },
-  "homepage": "https://github.com/STALK37/Kratea#readme",
+  "homepage": "https://github.com/yobozavrik/siteGB#readme",
   "engines": {
     "node": ">=20"
   }

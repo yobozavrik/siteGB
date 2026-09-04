@@ -1,99 +1,72 @@
-import { motion } from "framer-motion";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import CartDrawer from "@/components/CartDrawer";
+import { Link } from "react-router-dom";
+import SiteLayout from "@/components/SiteLayout";
 import SEO from "@/components/SEO";
+import { totalShops, totalCities, productionShops } from "@/data/shops";
+import { SITE_URL } from "@/config/site";
 
-import { Shield, Sparkles, Leaf, Award, Heart, Globe } from "lucide-react";
-
-const ease = [0.16, 1, 0.3, 1] as const;
-
-const values = [
-  { icon: Leaf, title: "Натуральність", desc: "Ми використовуємо лише природні інгредієнти, перевірені тисячоліттями використання різними культурами." },
-  { icon: Heart, title: "Піклування", desc: "Кожен продукт створений з турботою про ваше здоров'я та самопочуття." },
-  { icon: Globe, title: "Інновації", desc: "Поєднуємо стародавні знання з сучасними технологіями виробництва." },
-  { icon: Shield, title: "Якість", desc: "Суворий контроль якості на кожному етапі виробництва." },
-  { icon: Sparkles, title: "Ефективність", desc: "Наші формули розроблені для максимальної ефективності та м'якої дії." },
-  { icon: Award, title: "Сертифікація", desc: "Усі продукти сертифіковані та відповідають нормативам безпеки України." },
+const stats = [
+  { value: "2018", label: "рік заснування мережі" },
+  { value: `${totalShops}`, label: "магазинів у демо-даних" },
+  { value: "0", label: "консервантів у складі" },
+  { value: "30 діб", label: "термін зберігання" },
 ];
 
-const SITE_URL = "https://kratea-official.com";
-
-const aboutJsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "KRATEA",
-    url: SITE_URL,
-    logo: `${SITE_URL}/favicon.png`,
-    description: "KRATEA — натуральні функціональні напої від GoldProduct.",
-    sameAs: [
-      "https://www.instagram.com/kratea_official/",
-      "https://www.tiktok.com/@kratea",
-    ],
-  },
-];
-
-const AboutPage = () => {
-  return (
-    <div className="min-h-screen bg-background">
+const AboutPage = () => (
+  <SiteLayout
+    seo={
       <SEO
-        title="Про нас — KRATEA"
-        description="KRATEA — бренд функціональних напоїв від GoldProduct. Натуральні інгредієнти, сучасні технології, турбота про здоров'я."
+        title="Про нас — кухня за склом | Галя Балувана"
+        description="Домашні напівфабрикати ручного ліплення з натуральних продуктів. Виробництво працює за склом просто в магазині — видно кожен етап."
         path="/about"
-        jsonLd={aboutJsonLd}
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            name: "Про Галя Балувана",
+            url: `${SITE_URL}/about`,
+          },
+        ]}
       />
-      <Header />
-      <CartDrawer />
+    }
+  >
+    <div className="mx-auto max-w-3xl px-6 py-12">
+      <p className="text-sm font-bold uppercase tracking-[.25em] text-primary">Про нас</p>
+      <h1 className="mt-3 text-4xl font-black md:text-5xl">Кухня за склом</h1>
 
-      
-      <section className="pt-32 section-padding">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease }}
-            className="text-center mb-16"
-          >
-            <h1 className="text-5xl md:text-6xl font-black mb-6">Про нас</h1>
-            <p className="text-xl text-foreground/60 max-w-3xl mx-auto leading-relaxed">
-              KRATEA — це бренд функціональних напоїв від GoldProduct. Ми створили продукт, який поєднує в собі всю енергію і корисні властивості рослин, відомих людству вже більше тисячі років.
-            </p>
-          </motion.div>
+      <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+        Ми почали з простої ідеї: напівфабрикати мають бути такими, які не соромно приготувати
+        мамі. Тому цех у нас не заховано — він за склом просто в залі магазину. Кожен бачить, з
+        чого й як ми ліпимо.
+      </p>
+      <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+        Тісто розкачуємо й защипуємо руками. Начинки готуємо щодня з простих продуктів — картопля,
+        гриби, сир, м'ясо, вишня. Ніякої сої, консервантів чи замінників жиру: саме тому термін
+        зберігання — до 30 діб, а не пів року.
+      </p>
+      <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+        Зараз виробництво за склом працює у {productionShops.length} магазинах у {totalCities}{" "}
+        містах. Асортимент, ціни й наявність можуть трохи відрізнятися залежно від точки.
+      </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease, delay: 0.2 }}
-            className="glass-card p-8 md:p-12 mb-16"
-          >
-            <h2 className="text-2xl font-bold mb-4">Наша місія</h2>
-            <p className="text-foreground/70 leading-relaxed text-lg">
-              Ми прагнемо зробити натуральні функціональні напої доступними для кожного. Наші продукти допомагають людям знайти баланс між енергією та спокоєм, використовуючи силу природи без штучних стимуляторів та шкідливих добавок.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((v, i) => (
-              <motion.div
-                key={v.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease, delay: 0.3 + i * 0.1 }}
-                className="glass-surface p-6 group hover:border-primary/30 transition-colors"
-              >
-                <v.icon className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-lg font-bold mb-2">{v.title}</h3>
-                <p className="text-foreground/60 text-sm leading-relaxed">{v.desc}</p>
-              </motion.div>
-            ))}
+      <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {stats.map((s) => (
+          <div key={s.label} className="rounded-2xl border border-border bg-card p-4 text-center">
+            <div className="text-2xl font-black text-primary">{s.value}</div>
+            <div className="mt-1 text-[11px] text-muted-foreground">{s.label}</div>
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
-      <Footer />
+      <div className="mt-10 flex flex-wrap gap-3">
+        <Link to="/menu" className="rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground">
+          Перейти до меню
+        </Link>
+        <Link to="/shops" className="rounded-full border border-border px-6 py-3 font-bold">
+          Знайти магазин
+        </Link>
+      </div>
     </div>
-  );
-};
+  </SiteLayout>
+);
 
 export default AboutPage;

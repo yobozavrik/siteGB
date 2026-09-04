@@ -1,31 +1,23 @@
-# KRATEA
+# Галя Балувана
 
-> KRATEA — українські натуральні функціональні напої від GoldProduct з кава-кава, канною та GABA для енергії, спокою та концентрації.
+> Галя Балувана — магазин домашніх напівфабрикатів ручного ліплення: вареники, пельмені, млинці, сирники, чебуреки, голубці, котлети та десерти. Виробництво працює за склом просто в магазині. Доставка по місту й самовивіз.
 
 ## Pages
 
-- [Головна](/): Лінійка функціональних напоїв KRATEA, переваги, FAQ.
-- [Про нас](/about): Місія, цінності та підхід бренду KRATEA.
-- [Блог](/blog): Статті про функціональні напої, рослинні адаптогени та велнес.
-- [Де купити](/where-to-buy): Магазини й партнерські мережі по містах України.
-- [Співпраця](/collaboration): Умови для дистриб'юторів і роздрібних мереж.
-- [Контакти](/contact): Телефон, email і форма зворотного зв'язку.
+- [Головна](/): Меню, переваги, магазини, рецепти.
+- [Меню](/menu): Усі категорії та товари з цінами (за упаковку і за 100 г).
+- [Доставка та оплата](/delivery): Зони, тарифи, способи оплати, самовивіз.
+- [Магазини](/shops): Адреси, графік і телефони по містах України.
+- [Про нас](/about): Кухня за склом, підхід, натуральний склад.
+- [Франшиза](/franchise): Умови партнерства й заявка.
+- [Контакти](/contacts): Телефон, пошта, форма зворотного зв'язку.
+- [Рецепти та поради](/blog): Як готувати й зберігати напівфабрикати.
 
-## Articles
+## Recipes & tips
 
-- [Що таке функціональні напої](/blog/shcho-take-funktsionalni-napoi)
-- [Кава-кава: природний антистрес](/blog/kava-kava-pryrodnyy-antystres)
-- [Канна: рослина настрою](/blog/kanna-roslyna-nastroyu)
-- [GABA у напоях](/blog/gaba-aminokyslota-dlya-fokusu)
-- [Натуральна альтернатива енергетикам](/blog/naturalna-alternatyva-energetykam)
-- [Як зменшити стрес натурально](/blog/yak-zmenshyty-stres-naturalno)
-
-## Landing pages
-
-- [Енергетик без кофеїну](/energetyk-bez-kofeyinu)
-- [Напій від стресу](/napiy-vid-stresu)
-- [GABA напій](/gaba-napiy)
-- [Купити KRATEA у Києві](/kupyty-kratea-kyiv)
-- [Купити KRATEA у Львові](/kupyty-kratea-lviv)
-- [Купити KRATEA в Одесі](/kupyty-kratea-odesa)
-- [KRATEA vs Red Bull](/kratea-vs-red-bull)
+- [Як варити вареники](/blog/yak-varyty-varenyky-shchob-ne-rozvarylysya)
+- [Скільки зберігаються напівфабрикати](/blog/skilky-zberihayutsya-domashni-napivfabrykaty)
+- [Меню на тиждень із напівфабрикатів](/blog/menyu-na-tyzhden-z-napivfabrykativ)
+- [Вареники, пельмені, хінкалі — різниця](/blog/chym-vidriznyayutsya-varenyky-pelmeni-halushky)
+- [Як смажити заморожені сирники](/blog/yak-smazhyty-syrnyky-shchob-ne-rozplyvalysya)
+- [Святковий стіл з напівфабрикатів](/blog/svyatkovyy-stil-shvydko-z-napivfabrykativ)

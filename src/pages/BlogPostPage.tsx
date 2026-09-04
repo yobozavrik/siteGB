@@ -6,8 +6,8 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import SEO from "@/components/SEO";
 import { blogPosts, getPostBySlug } from "@/data/blogPosts";
+import { SITE_URL } from "@/config/site";
 
-const SITE_URL = "https://kratea-official.com";
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const BlogPostPage = () => {
@@ -29,10 +29,10 @@ const BlogPostPage = () => {
       dateModified: post.date,
       url,
       mainEntityOfPage: url,
-      author: { "@type": "Organization", name: "KRATEA", url: SITE_URL },
+      author: { "@type": "Organization", name: "Галя Балувана", url: SITE_URL },
       publisher: {
         "@type": "Organization",
-        name: "KRATEA",
+        name: "Галя Балувана",
         logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.png` },
       },
       keywords: post.tags.join(", "),
@@ -51,7 +51,7 @@ const BlogPostPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO title={`${post.metaTitle ?? post.title} — KRATEA`} description={post.description} path={`/blog/${post.slug}`} type="article" jsonLd={jsonLd} />
+      <SEO title={`${post.metaTitle ?? post.title} — Галя Балувана`} description={post.description} path={`/blog/${post.slug}`} type="article" jsonLd={jsonLd} />
       <Header />
       <CartDrawer />
 
@@ -115,10 +115,10 @@ const BlogPostPage = () => {
           </div>
 
           <div className="mt-12 glass-card p-8 text-center">
-            <h2 className="text-2xl font-bold mb-3">Спробуйте KRATEA</h2>
-            <p className="text-foreground/60 mb-6">Натуральні функціональні напої з доставкою по всій Україні.</p>
-            <Link to="/#products" className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition">
-              Обрати смак
+            <h2 className="text-2xl font-bold mb-3">Замовити напівфабрикати</h2>
+            <p className="text-foreground/60 mb-6">Домашнє ручного ліплення — з доставкою або самовивозом.</p>
+            <Link to="/menu" className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition">
+              Перейти до меню
             </Link>
           </div>
 

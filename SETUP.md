@@ -1,29 +1,27 @@
 # Setup
 
-The storefront runs without a backend — catalogue, blog and store locator are static data. The **cart,
-checkout, contact form and admin panel** need Supabase. This document covers both.
+Каталог, меню й кошик працюють без бекенда. **Оформлення замовлення, форма контактів,
+форма франшизи та адмінка** потребують Supabase. Цей документ покриває обидва випадки.
 
-## 1. Frontend only (2 minutes)
+## 1. Тільки фронтенд (2 хвилини)
 
 ```bash
-git clone https://github.com/STALK37/Kratea.git
-cd Kratea
 npm install
-cp .env.example .env      # placeholder values are fine to browse the site
+cp .env.example .env      # плейсхолдерів достатньо, щоб дивитися сайт
 npm run dev               # http://localhost:8080
 ```
 
-Everything renders. Adding to cart works — it's client-side state. Submitting an order fails, because
-there's nowhere to send it. That's expected until step 2.
+Усе рендериться, додавання в кошик працює (клієнтський стан + localStorage).
+Підтвердження замовлення впаде — його нема куди відправити. Це очікувано до кроку 2.
 
-## 2. Full stack with Supabase (~15 minutes)
+## 2. Повний стек із Supabase (~15 хвилин)
 
-### 2.1 Create a project
+### 2.1 Створити проєкт
 
-Sign in at [supabase.com](https://supabase.com) → **New project**. Note the project ref from the URL
-(`https://supabase.com/dashboard/project/<ref>`).
+Увійдіть на [supabase.com](https://supabase.com) → **New project**. Запишіть project ref
+з URL (`https://supabase.com/dashboard/project/<ref>`).
 
-### 2.2 Apply the schema
+### 2.2 Застосувати схему
 
 ```bash
 npm i -g supabase
@@ -32,89 +30,91 @@ supabase link --project-ref <your-ref>
 supabase db push
 ```
 
-`supabase/migrations/` contains the full history — two tables (`orders`, `contact_messages`) with
-row-level security policies. See [Security model](#security-model).
+`supabase/migrations/` містить повну історію: таблиці `orders` та `contact_messages` з
+RLS-політиками (див. [Модель безпеки](#модель-безпеки)). Остання міграція
+`20260904120000_galya_order_fields.sql` додає до `orders` колонки `delivery_type`,
+`shop_id`, `time_slot`, `payment_method` і робить `customer_email` необов'язковим.
 
-### 2.3 Deploy the edge functions
+### 2.3 Задеплоїти edge-функції
 
 ```bash
 supabase functions deploy telegram-order-notify
 supabase functions deploy admin-orders
-supabase functions deploy customer-support     # optional, AI chat
-supabase functions deploy marketing-ai         # optional, AI copy generation
+supabase functions deploy customer-support     # опційно, AI-чат
+supabase functions deploy marketing-ai         # опційно, генерація копірайту
 ```
 
-### 2.4 Set function secrets
+### 2.4 Виставити секрети функцій
 
-Never in `.env` — these live server-side only.
+Ніколи не в `.env` — вони живуть тільки на сервері.
 
 ```bash
-# Order notifications to Telegram
+# Сповіщення про замовлення в Telegram
 supabase secrets set TELEGRAM_BOT_TOKEN="123456:ABC..." TELEGRAM_CHAT_ID="-1001234567890"
 
-# Protects the admin-orders function
+# Захищає функцію admin-orders
 supabase secrets set ADMIN_SECRET_KEY="$(openssl rand -hex 32)"
 
-# Only if you deploy the AI functions. Any OpenAI-compatible endpoint works;
-# the default is OpenRouter, which uses the same "vendor/model" ids.
+# Лише якщо деплоїте AI-функції. Підходить будь-який OpenAI-сумісний endpoint.
 supabase secrets set AI_API_KEY="sk-or-..."
-# optional overrides
-supabase secrets set AI_GATEWAY_URL="https://openrouter.ai/api/v1/chat/completions"
-supabase secrets set AI_MODEL="google/gemini-2.5-flash"
 ```
 
-`SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are injected automatically — don't set them yourself.
+`SUPABASE_URL` та `SUPABASE_SERVICE_ROLE_KEY` підставляються автоматично — не задавайте їх.
 
-### 2.5 Point the frontend at it
+### 2.5 Вказати фронтенду, куди дивитися
 
-Copy your values from **Project Settings → API** into `.env`:
+Скопіюйте значення з **Project Settings → API** у `.env`:
 
 ```bash
 VITE_SUPABASE_PROJECT_ID="your-ref"
 VITE_SUPABASE_URL="https://your-ref.supabase.co"
 VITE_SUPABASE_PUBLISHABLE_KEY="your-anon-public-key"
-VITE_SITE_URL="https://your-domain.com"
+VITE_SITE_URL="https://your-domain"
 ```
 
-Restart `npm run dev`. Checkout now writes to `orders` and pings Telegram.
+Перезапустіть `npm run dev`. Оформлення тепер пише в `orders` і пінгує Telegram.
 
-## Security model
+## Модель безпеки
 
-Worth understanding before you change a policy.
-
-| Table | Public INSERT | Public SELECT | Public UPDATE / DELETE |
+| Таблиця | Public INSERT | Public SELECT | Public UPDATE / DELETE |
 |---|---|---|---|
-| `orders` | ✅ checkout | ❌ denied | ❌ denied |
-| `contact_messages` | ✅ contact form | ❌ denied | ❌ denied |
+| `orders` | ✅ checkout | ❌ (лише edge-функція) | ❌ |
+| `contact_messages` | ✅ форми | ❌ | ❌ |
 
-Anyone with the anon key can *create* an order — that's what a public checkout is. Nobody can read one
-back. Reads happen only through the `admin-orders` edge function, which runs with the service-role key and
-requires `ADMIN_SECRET_KEY`.
+Будь-хто з anon-ключем може *створити* замовлення — це і є публічний checkout. Прочитати
+його назад не може ніхто. Читання — тільки через edge-функцію `admin-orders`, яка працює
+з service-role ключем і вимагає `ADMIN_SECRET_KEY`.
 
 > [!IMPORTANT]
-> Migrations `20260403111927` and `20260403112255` **drop** the original permissive read policies before
-> `20260403112322` adds explicit denies. Apply them in order — running the first migration alone leaves
-> customer orders publicly readable.
+> Міграції `20260403111927` та `20260403112255` **знімають** дозвільні read-політики
+> перед тим, як `20260403112322` додає явні denies. Застосовуйте по порядку.
 
-The anon key is safe to ship in a frontend bundle; it's designed for that, and RLS is what protects the
-data. **The service-role key is not** — it bypasses RLS entirely and belongs only in function secrets.
+anon-ключ безпечно потрапляє в бандл — його захищає RLS. **service-role ключ — ні**, він
+живе лише в секретах функцій.
 
-## Deploy
+## Деплой (Vercel)
 
 ```bash
-npm run build     # → dist/, plus 22 prerendered HTML files
+npm run build     # → dist/ + ~60 prerendered HTML + sitemap.xml
 ```
 
-Any static host works — Netlify, Vercel, Cloudflare Pages, S3. Set the `VITE_*` variables in the host's
-environment, and configure a SPA fallback to `index.html` for client-side routes.
+1. Push у `main` → Vercel запускає `npm run build` і деплоїть `dist/`.
+2. **Project → Settings → Environment Variables** — ті самі 4 `VITE_*` змінні.
+3. `vercel.json` уже налаштований: framework `vite`, SPA-rewrite на `/index.html`,
+   незмінний кеш для `/assets/*`. Prerendered-теки віддаються файловою системою до rewrite.
+4. Supabase — `supabase db push` для нових міграцій; edge-функції задеплоєні; секрети виставлені.
 
-## Troubleshooting
+## Траблшутинг
 
-**Blank page, console shows `Invalid supabaseUrl`** — `.env` is missing or unread. Vite only reads it at
-startup; restart the dev server.
+**Порожня сторінка, у консолі `Invalid supabaseUrl`** — `.env` відсутній або не прочитаний.
+Vite читає його лише на старті; перезапустіть dev-сервер.
 
-**Orders submit but nothing arrives in Telegram** — check `supabase functions logs telegram-order-notify`.
-Usually a wrong `TELEGRAM_CHAT_ID`; group ids are negative and start with `-100`.
+**Замовлення створюється, але в Telegram нічого** — `supabase functions logs
+telegram-order-notify`. Зазвичай неправильний `TELEGRAM_CHAT_ID` (id груп від'ємні,
+починаються з `-100`).
 
-**Admin panel shows nothing** — `admin-orders` isn't deployed, or `ADMIN_SECRET_KEY` doesn't match the key
-the panel sends.
+**Адмінка нічого не показує** — `admin-orders` не задеплоєна, або `ADMIN_SECRET_KEY` не
+збігається з ключем, який вводите в панелі.
+
+**Playwright падає з «no h1» на всіх тестах** — на порту 4173 висить сторонній сервер;
+`reuseExistingServer` підхоплює його замість `vite preview`. Звільніть порт.

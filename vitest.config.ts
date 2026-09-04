@@ -9,6 +9,12 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    env: {
+      VITE_SUPABASE_PROJECT_ID: "test",
+      VITE_SUPABASE_URL: "https://test.supabase.co",
+      VITE_SUPABASE_PUBLISHABLE_KEY: "test-anon-key",
+      VITE_SITE_URL: "https://galya-baluvana.test",
+    },
   },
   resolve: {
     alias: { "@": path.resolve(__dirname, "./src") },
