@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { blogPosts } from "@/data/blogPosts";
 import { landingPages } from "@/data/landingPages";
 import { products, categories } from "@/data/catalog";
+import { faqItems } from "@/data/faq";
 
 // Regression guard: this repo was forked from the "Kratea" energy-drink storefront.
 // None of the Kratea domain vocabulary may survive in Galya Baluvana content data.
@@ -17,6 +18,17 @@ describe("content is Galya Baluvana, not Kratea", () => {
   scan("blogPosts", JSON.stringify(blogPosts));
   scan("landingPages", JSON.stringify(landingPages));
   scan("catalog", JSON.stringify({ products, categories }));
+  scan("faq", JSON.stringify(faqItems));
+
+  it("faq items are non-trivial and questions are unique", () => {
+    const qs = faqItems.map((f) => f.q);
+    expect(new Set(qs).size).toBe(qs.length);
+    expect(faqItems.length).toBeGreaterThanOrEqual(4);
+    for (const f of faqItems) {
+      expect(f.q.trim().endsWith("?"), f.q).toBe(true);
+      expect(f.a.length).toBeGreaterThan(30);
+    }
+  });
 
   it("blog slugs are unique and every post has a description + excerpt", () => {
     const slugs = blogPosts.map((p) => p.slug);

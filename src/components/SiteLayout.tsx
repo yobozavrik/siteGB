@@ -1,7 +1,11 @@
-import type { ReactNode } from "react";
+import { Suspense, lazy, type ReactNode } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import { supabaseConfigured } from "@/integrations/supabase/client";
+
+// Pulls in react-markdown — keep it out of the initial bundle.
+const CustomerSupportChat = lazy(() => import("@/components/CustomerSupportChat"));
 
 interface SiteLayoutProps {
   children: ReactNode;
@@ -18,6 +22,11 @@ const SiteLayout = ({ children, seo, offsetHeader = true }: SiteLayoutProps) => 
     <CartDrawer />
     <main className={`flex-1 ${offsetHeader ? "pt-[72px]" : ""}`}>{children}</main>
     <Footer />
+    {supabaseConfigured && (
+      <Suspense fallback={null}>
+        <CustomerSupportChat />
+      </Suspense>
+    )}
   </div>
 );
 
