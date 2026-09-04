@@ -1,0 +1,31 @@
+# KRATEA
+
+> KRATEA — українські натуральні функціональні напої від GoldProduct з кава-кава, канною та GABA для енергії, спокою та концентрації.
+
+## Pages
+
+- [Головна](/): Лінійка функціональних напоїв KRATEA, переваги, FAQ.
+- [Про нас](/about): Місія, цінності та підхід бренду KRATEA.
+- [Блог](/blog): Статті про функціональні напої, рослинні адаптогени та велнес.
+- [Де купити](/where-to-buy): Магазини й партнерські мережі по містах України.
+- [Співпраця](/collaboration): Умови для дистриб'юторів і роздрібних мереж.
+- [Контакти](/contact): Телефон, email і форма зворотного зв'язку.
+
+## Articles
+
+- [Що таке функціональні напої](/blog/shcho-take-funktsionalni-napoi)
+- [Кава-кава: природний антистрес](/blog/kava-kava-pryrodnyy-antystres)
+- [Канна: рослина настрою](/blog/kanna-roslyna-nastroyu)
+- [GABA у напоях](/blog/gaba-aminokyslota-dlya-fokusu)
+- [Натуральна альтернатива енергетикам](/blog/naturalna-alternatyva-energetykam)
+- [Як зменшити стрес натурально](/blog/yak-zmenshyty-stres-naturalno)
+
+## Landing pages
+
+- [Енергетик без кофеїну](/energetyk-bez-kofeyinu)
+- [Напій від стресу](/napiy-vid-stresu)
+- [GABA напій](/gaba-napiy)
+- [Купити KRATEA у Києві](/kupyty-kratea-kyiv)
+- [Купити KRATEA у Львові](/kupyty-kratea-lviv)
+- [Купити KRATEA в Одесі](/kupyty-kratea-odesa)
+- [KRATEA vs Red Bull](/kratea-vs-red-bull)
