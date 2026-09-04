@@ -11,7 +11,7 @@ const MenuPage = () => (
     seo={
       <SEO
         title="Меню — домашні напівфабрикати Галя Балувана"
-        description="Повне меню: вареники, пельмені, млинці, сирники, чебуреки, голубці, котлети та десерти ручного ліплення. Ціни за упаковку і за 100 г."
+        description="Повний асортимент по категоріях: вареники, пельмені, млинці, сирники, чебуреки, голубці, котлети, піца, випічка ручного ліплення."
         path="/menu"
         jsonLd={[
           {
@@ -30,8 +30,8 @@ const MenuPage = () => (
       <p className="text-sm font-bold uppercase tracking-[.25em] text-primary">Меню</p>
       <h1 className="mt-3 text-4xl font-black md:text-5xl">Оберіть свій смак</h1>
       <p className="mt-4 max-w-2xl text-muted-foreground">
-        {totalProducts} позицій ручного ліплення. Ціни та наявність можуть відрізнятися залежно від
-        магазину — уточнюйте при оформленні.
+        {totalProducts} позицій ручного ліплення у {categoriesSorted.length} категоріях.
+        Ціни та наявність — у магазині: залежать від точки.
       </p>
 
       <div className="mt-8 flex flex-wrap gap-2">

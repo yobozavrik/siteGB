@@ -13,8 +13,6 @@ test.describe("storefront", () => {
       "/menu",
       "/menu/vareniki",
       "/product/vareniki-z-vyshneyu",
-      "/cart",
-      "/checkout",
       "/delivery",
       "/shops",
       "/about",
@@ -40,11 +38,12 @@ test.describe("storefront", () => {
     await expect(page.getByText(/404|не знайдено/i).first()).toBeVisible();
   });
 
-  test("adding a product from the menu increases the cart badge", async ({ page }) => {
-    await page.goto("/menu");
-    const addButtons = page.getByRole("button", { name: /Додати .* у кошик/i });
-    await addButtons.first().click();
-    await expect(page.getByText(/Кошик · 1/).first()).toBeVisible();
+  test("catalogue mode: no prices, no cart, /cart redirects to /menu", async ({ page }) => {
+    await page.goto("/menu/vareniki");
+    await expect(page.getByText("₴")).toHaveCount(0);
+    await expect(page.getByRole("link", { name: /кошик/i })).toHaveCount(0);
+    await page.goto("/cart");
+    await expect(page).toHaveURL(/\/menu$/);
   });
 
   test("product page tabs switch content", async ({ page }) => {

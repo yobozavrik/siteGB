@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Phone } from "lucide-react";
 import SiteLayout from "@/components/SiteLayout";
 import SEO from "@/components/SEO";
 import ProductCard from "@/components/catalog/ProductCard";
@@ -14,7 +14,7 @@ import {
   productImage,
 } from "@/data/catalog";
 import { useCart } from "@/context/CartContext";
-import { SITE_URL } from "@/config/site";
+import { SITE_URL, SHOW_PRICES, PHONE, PHONE_DISPLAY } from "@/config/site";
 
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -48,8 +48,8 @@ const ProductPage = () => {
     <SiteLayout
       seo={
         <SEO
-          title={`${product.title} — купити, ${product.priceUAH} ₴ | Галя Балувана`}
-          description={`${product.title}, ${product.unitLabel}. ${product.composition.slice(0, 120)} Доставка та самовивіз.`}
+          title={`${product.title} — ${cat?.title ?? "меню"} | Галя Балувана`}
+          description={`${product.title}, ${product.unitLabel}. ${product.composition.slice(0, 130)}`}
           path={`/product/${product.slug}`}
           type="product"
           jsonLd={[
@@ -60,15 +60,17 @@ const ProductPage = () => {
               image: `${SITE_URL}${image}`,
               description: product.composition,
               category: cat?.title,
-              offers: {
-                "@type": "Offer",
-                price: product.priceUAH,
-                priceCurrency: "UAH",
-                availability: product.isActive
-                  ? "https://schema.org/InStock"
-                  : "https://schema.org/OutOfStock",
-                url,
-              },
+              ...(SHOW_PRICES
+                ? {
+                    offers: {
+                      "@type": "Offer",
+                      price: product.priceUAH,
+                      priceCurrency: "UAH",
+                      availability: "https://schema.org/InStock",
+                      url,
+                    },
+                  }
+                : {}),
             },
             {
               "@context": "https://schema.org",
@@ -119,38 +121,49 @@ const ProductPage = () => {
               Ручне ліплення · {product.unitLabel} · заморожені −18 °C
             </p>
 
-            <div className="my-5 flex items-baseline gap-3 border-y border-border py-4">
-              <span className="text-3xl font-black tabular-nums">{product.priceUAH} ₴</span>
-              <span className="text-sm text-muted-foreground">
-                за упаковку · <b className="text-foreground tabular-nums">{per100} ₴ / 100 г</b>
-              </span>
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <div className="flex w-max items-center overflow-hidden rounded-xl border border-border">
-                <button
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  aria-label="Менше"
-                  className="grid h-11 w-12 place-items-center hover:bg-muted"
+            {SHOW_PRICES ? (
+              <>
+                <div className="my-5 flex items-baseline gap-3 border-y border-border py-4">
+                  <span className="text-3xl font-black tabular-nums">{product.priceUAH} ₴</span>
+                  <span className="text-sm text-muted-foreground">
+                    за упаковку · <b className="text-foreground tabular-nums">{per100} ₴ / 100 г</b>
+                  </span>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <div className="flex w-max items-center overflow-hidden rounded-xl border border-border">
+                    <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Менше" className="grid h-11 w-12 place-items-center hover:bg-muted">
+                      <Minus size={16} />
+                    </button>
+                    <span className="w-10 text-center font-bold tabular-nums">{qty}</span>
+                    <button onClick={() => setQty((q) => Math.min(20, q + 1))} aria-label="Більше" className="grid h-11 w-12 place-items-center hover:bg-muted">
+                      <Plus size={16} />
+                    </button>
+                  </div>
+                  <button
+                    onClick={add}
+                    className="flex-1 whitespace-nowrap rounded-xl bg-primary px-6 py-3.5 font-bold text-primary-foreground transition-transform active:scale-[0.98]"
+                  >
+                    Додати в кошик · {product.priceUAH * qty} ₴
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="my-5 rounded-xl border border-border bg-muted/40 p-4">
+                <p className="text-sm text-muted-foreground">
+                  Ціну та наявність уточнюйте в магазині або за телефоном — асортимент і
+                  ціни залежать від точки.
+                </p>
+                <a
+                  href={`tel:${PHONE}`}
+                  className="mt-3 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground"
                 >
-                  <Minus size={16} />
-                </button>
-                <span className="w-10 text-center font-bold tabular-nums">{qty}</span>
-                <button
-                  onClick={() => setQty((q) => Math.min(20, q + 1))}
-                  aria-label="Більше"
-                  className="grid h-11 w-12 place-items-center hover:bg-muted"
-                >
-                  <Plus size={16} />
-                </button>
+                  <Phone size={16} /> {PHONE_DISPLAY}
+                </a>
+                <Link to="/shops" className="ml-3 text-sm font-semibold text-primary hover:underline">
+                  Знайти магазин
+                </Link>
               </div>
-              <button
-                onClick={add}
-                className="flex-1 whitespace-nowrap rounded-xl bg-primary px-6 py-3.5 font-bold text-primary-foreground transition-transform active:scale-[0.98]"
-              >
-                Додати в кошик · {product.priceUAH * qty} ₴
-              </button>
-            </div>
+            )}
 
             <Tabs defaultValue="composition" className="mt-8">
               <TabsList className="scrollbar-hide flex w-full max-w-full justify-start overflow-x-auto">

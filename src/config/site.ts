@@ -35,6 +35,13 @@ export const DELIVERY_FREE_FROM_UAH = 1500;
 
 export const CITY_PRIMARY = "Київ";
 
+/**
+ * Catalogue mode. When false, the site shows the assortment by category with no
+ * prices and no online cart / checkout (prices depend on the shop — the real
+ * "Галя Балувана" franchise model). Flip to true to enable priced online ordering.
+ */
+export const SHOW_PRICES = false;
+
 export const site = {
   SITE_URL,
   BRAND,

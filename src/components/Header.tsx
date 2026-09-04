@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { SHOW_PRICES } from "@/config/site";
 
 const nav = [
   { label: "Меню", to: "/menu" },
@@ -36,22 +37,26 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-1">
-          <Link to="/cart" className="relative p-2 hidden sm:block" aria-label="Кошик">
-            <ShoppingCart size={20} />
-            {totalItems > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 px-0.5 place-items-center rounded-full bg-primary text-[10px] font-bold">
-                {totalItems}
-              </span>
-            )}
-          </Link>
-          <button onClick={() => setIsCartOpen(true)} aria-label="Відкрити кошик" className="relative p-2 sm:hidden">
-            <ShoppingCart size={20} />
-            {totalItems > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 px-0.5 place-items-center rounded-full bg-primary text-[10px] font-bold">
-                {totalItems}
-              </span>
-            )}
-          </button>
+          {SHOW_PRICES && (
+            <>
+              <Link to="/cart" className="relative p-2 hidden sm:block" aria-label="Кошик">
+                <ShoppingCart size={20} />
+                {totalItems > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 px-0.5 place-items-center rounded-full bg-primary text-[10px] font-bold">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+              <button onClick={() => setIsCartOpen(true)} aria-label="Відкрити кошик" className="relative p-2 sm:hidden">
+                <ShoppingCart size={20} />
+                {totalItems > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 px-0.5 place-items-center rounded-full bg-primary text-[10px] font-bold">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
+            </>
+          )}
           <button onClick={() => setOpen(!open)} aria-label="Меню" aria-expanded={open} className="lg:hidden p-2">
             {open ? <X /> : <Menu />}
           </button>
@@ -70,9 +75,11 @@ const Header = () => {
               {item.label}
             </NavLink>
           ))}
-          <Link to="/cart" onClick={() => setOpen(false)} className="text-left text-white/85 hover:text-white">
-            Кошик{totalItems > 0 ? ` · ${totalItems}` : ""}
-          </Link>
+          {SHOW_PRICES && (
+            <Link to="/cart" onClick={() => setOpen(false)} className="text-left text-white/85 hover:text-white">
+              Кошик{totalItems > 0 ? ` · ${totalItems}` : ""}
+            </Link>
+          )}
         </nav>
       )}
     </header>

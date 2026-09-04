@@ -16,6 +16,7 @@ import { categoriesSorted, productsByCategory, activeProducts, pricePer100g, pro
 import { blogPosts } from "@/data/blogPosts";
 import { totalShops, totalCities, productionShops } from "@/data/shops";
 import { useCart } from "@/context/CartContext";
+import { SHOW_PRICES } from "@/config/site";
 import heroFood from "@/assets/galya-hero-food.png";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -103,6 +104,8 @@ export const HitsSection = () => {
   const { addItem } = useCart();
   const hits = activeProducts.filter((p) => p.tags.includes("hit")).slice(0, 3);
   if (hits.length === 0) return null;
+  const eyebrow = SHOW_PRICES ? "Хіти тижня" : "Популярне";
+  const heading = SHOW_PRICES ? "Беруть найчастіше" : "Обирають найчастіше";
 
   return (
     <section className="section-padding relative overflow-hidden pt-0">
@@ -114,8 +117,8 @@ export const HitsSection = () => {
           transition={{ duration: 0.6, ease }}
           className="mb-14 text-center"
         >
-          <Eyebrow>Хіти тижня</Eyebrow>
-          <h2 className="text-4xl font-black md:text-6xl">Беруть найчастіше</h2>
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="text-4xl font-black md:text-6xl">{heading}</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -139,28 +142,40 @@ export const HitsSection = () => {
               </div>
               <h3 className="text-xl font-black leading-tight">{p.title}</h3>
               <p className="mt-1 text-xs text-muted-foreground">{p.unitLabel}</p>
-              <p className="mt-4 font-mono text-2xl font-black">
-                {p.priceUAH} <span className="text-sm font-medium text-muted-foreground">₴</span>
-              </p>
-              <p className="text-xs text-muted-foreground tabular-nums">{pricePer100g(p)} ₴ / 100 г</p>
-              <motion.button
-                onClick={() =>
-                  addItem({
-                    id: p.id,
-                    slug: p.slug,
-                    title: p.title,
-                    unitLabel: p.unitLabel,
-                    priceUAH: p.priceUAH,
-                    image: productImage(p),
-                  })
-                }
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.96 }}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-muted py-3.5 text-sm font-bold uppercase tracking-wider transition-all hover:bg-primary hover:text-primary-foreground"
-              >
-                <ShoppingCart className="h-4 w-4" />
-                В кошик
-              </motion.button>
+
+              {SHOW_PRICES ? (
+                <>
+                  <p className="mt-4 font-mono text-2xl font-black">
+                    {p.priceUAH} <span className="text-sm font-medium text-muted-foreground">₴</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground tabular-nums">{pricePer100g(p)} ₴ / 100 г</p>
+                  <motion.button
+                    onClick={() =>
+                      addItem({
+                        id: p.id,
+                        slug: p.slug,
+                        title: p.title,
+                        unitLabel: p.unitLabel,
+                        priceUAH: p.priceUAH,
+                        image: productImage(p),
+                      })
+                    }
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-muted py-3.5 text-sm font-bold uppercase tracking-wider transition-all hover:bg-primary hover:text-primary-foreground"
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    В кошик
+                  </motion.button>
+                </>
+              ) : (
+                <Link
+                  to={`/product/${p.slug}`}
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary hover:underline"
+                >
+                  Детальніше <ArrowRight size={15} />
+                </Link>
+              )}
             </motion.article>
           ))}
         </div>

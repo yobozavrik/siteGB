@@ -3,6 +3,7 @@ import { Plus } from "lucide-react";
 import type { Product } from "@/data/catalog";
 import { pricePer100g, productImage } from "@/data/catalog";
 import { useCart } from "@/context/CartContext";
+import { SHOW_PRICES } from "@/config/site";
 import Tag from "@/components/catalog/Tag";
 
 const ProductCard = ({ product }: { product: Product }) => {
@@ -41,21 +42,31 @@ const ProductCard = ({ product }: { product: Product }) => {
           {product.title}
         </Link>
         <p className="text-xs text-muted-foreground">{product.unitLabel}</p>
-        <div className="mt-auto flex items-end justify-between gap-2 pt-1">
-          <div>
-            <div className="text-lg font-black tabular-nums">{product.priceUAH} ₴</div>
-            <div className="text-[11px] text-muted-foreground tabular-nums">
-              {pricePer100g(product)} ₴ / 100 г
+
+        {SHOW_PRICES ? (
+          <div className="mt-auto flex items-end justify-between gap-2 pt-1">
+            <div>
+              <div className="text-lg font-black tabular-nums">{product.priceUAH} ₴</div>
+              <div className="text-[11px] text-muted-foreground tabular-nums">
+                {pricePer100g(product)} ₴ / 100 г
+              </div>
             </div>
+            <button
+              onClick={add}
+              aria-label={`Додати «${product.title}» у кошик`}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-transform active:scale-95"
+            >
+              <Plus size={18} />
+            </button>
           </div>
-          <button
-            onClick={add}
-            aria-label={`Додати «${product.title}» у кошик`}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-transform active:scale-95"
+        ) : (
+          <Link
+            to={`/product/${product.slug}`}
+            className="mt-auto pt-1 text-sm font-semibold text-primary hover:underline"
           >
-            <Plus size={18} />
-          </button>
-        </div>
+            Детальніше →
+          </Link>
+        )}
       </div>
     </article>
   );

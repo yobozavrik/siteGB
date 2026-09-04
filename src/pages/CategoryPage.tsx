@@ -10,7 +10,7 @@ import {
   TAG_LABELS,
   type ProductTag,
 } from "@/data/catalog";
-import { SITE_URL } from "@/config/site";
+import { SITE_URL, SHOW_PRICES } from "@/config/site";
 
 type SortKey = "popular" | "price-asc" | "price-desc";
 
@@ -83,18 +83,20 @@ const CategoryPage = () => {
               {TAG_LABELS[t]}
             </button>
           ))}
-          <span className="ml-auto flex items-center gap-2 text-xs text-muted-foreground">
-            Сортувати
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value as SortKey)}
-              className="rounded-lg border border-border bg-card px-2 py-1.5 text-foreground"
-            >
-              <option value="popular">Спочатку популярні</option>
-              <option value="price-asc">Дешевші</option>
-              <option value="price-desc">Дорожчі</option>
-            </select>
-          </span>
+          {SHOW_PRICES && (
+            <span className="ml-auto flex items-center gap-2 text-xs text-muted-foreground">
+              Сортувати
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value as SortKey)}
+                className="rounded-lg border border-border bg-card px-2 py-1.5 text-foreground"
+              >
+                <option value="popular">Спочатку популярні</option>
+                <option value="price-asc">Дешевші</option>
+                <option value="price-desc">Дорожчі</option>
+              </select>
+            </span>
+          )}
         </div>
 
         {filtered.length === 0 ? (

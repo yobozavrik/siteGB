@@ -13,8 +13,8 @@ import {
   FranchiseSection,
 } from "@/components/GalyaSections";
 import { faqItems } from "@/data/faq";
-import { activeProducts } from "@/data/catalog";
-import { SITE_URL, BRAND, PHONE } from "@/config/site";
+import { activeProducts, productImage } from "@/data/catalog";
+import { SITE_URL, BRAND, PHONE, SHOW_PRICES } from "@/config/site";
 
 const featured = activeProducts.filter((p) => p.tags.includes("hit")).slice(0, 3);
 
@@ -58,15 +58,20 @@ const jsonLd = [
     "@type": "Product",
     name: p.title,
     description: p.composition,
-    image: `${SITE_URL}${p.images[0]}`,
+    image: `${SITE_URL}${productImage(p)}`,
     category: p.categorySlug,
-    offers: {
-      "@type": "Offer",
-      price: p.priceUAH,
-      priceCurrency: "UAH",
-      availability: "https://schema.org/InStock",
-      url: `${SITE_URL}/product/${p.slug}`,
-    },
+    url: `${SITE_URL}/product/${p.slug}`,
+    ...(SHOW_PRICES
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: p.priceUAH,
+            priceCurrency: "UAH",
+            availability: "https://schema.org/InStock",
+            url: `${SITE_URL}/product/${p.slug}`,
+          },
+        }
+      : {}),
   })),
 ];
 
@@ -76,7 +81,7 @@ const Index = () => (
     seo={
       <SEO
         title="Галя Балувана — домашні напівфабрикати ручного ліплення"
-        description="Вареники, пельмені, млинці, сирники ручного ліплення. Меню з цінами, доставка та самовивіз, карта магазинів по Україні."
+        description="Вареники, пельмені, млинці, сирники, голубці, котлети ручного ліплення. Асортимент по категоріях, карта магазинів, рецепти."
         path="/"
         jsonLd={jsonLd}
       />

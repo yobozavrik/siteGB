@@ -25,6 +25,7 @@ import BlogPostPage from "./pages/BlogPostPage.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { landingPages } from "./data/landingPages";
+import { SHOW_PRICES } from "@/config/site";
 
 // Admin pulls in recharts — keep it out of the storefront bundle.
 const AdminPage = lazy(() => import("./pages/AdminPage.tsx"));
@@ -45,9 +46,19 @@ const App = () => (
             <Route path="/menu" element={<MenuPage />} />
             <Route path="/menu/:category" element={<CategoryPage />} />
             <Route path="/product/:slug" element={<ProductPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/order/:id" element={<OrderPage />} />
+            {SHOW_PRICES ? (
+              <>
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/order/:id" element={<OrderPage />} />
+              </>
+            ) : (
+              <>
+                <Route path="/cart" element={<Navigate to="/menu" replace />} />
+                <Route path="/checkout" element={<Navigate to="/menu" replace />} />
+                <Route path="/order/:id" element={<Navigate to="/menu" replace />} />
+              </>
+            )}
             <Route path="/delivery" element={<DeliveryPage />} />
             <Route path="/shops" element={<ShopsPage />} />
             <Route path="/about" element={<AboutPage />} />

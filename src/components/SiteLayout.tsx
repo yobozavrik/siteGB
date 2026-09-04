@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import { supabaseConfigured } from "@/integrations/supabase/client";
+import { SHOW_PRICES } from "@/config/site";
 
 // Pulls in react-markdown — keep it out of the initial bundle.
 const CustomerSupportChat = lazy(() => import("@/components/CustomerSupportChat"));
@@ -19,7 +20,7 @@ const SiteLayout = ({ children, seo, offsetHeader = true }: SiteLayoutProps) => 
   <div className="min-h-screen bg-background flex flex-col">
     {seo}
     <Header />
-    <CartDrawer />
+    {SHOW_PRICES && <CartDrawer />}
     {/* pb clearance on mobile so a page's last CTA never sits under the chat FAB */}
     <main className={`flex-1 pb-24 sm:pb-0 ${offsetHeader ? "pt-[72px]" : ""}`}>{children}</main>
     <Footer />
