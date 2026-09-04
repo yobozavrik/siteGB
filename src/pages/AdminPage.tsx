@@ -27,13 +27,13 @@ const statusTone: Record<string, string> = {
 const formatCurrency = (amount: number) => `${new Intl.NumberFormat("uk-UA").format(amount)} ₴`;
 
 /** Row shape returned by the admin-orders edge function before items are parsed. */
-type RawOrder = Omit<Order, "items"> & { items: unknown };
+type RawOrder = Omit<OrderRecord, "items"> & { items: unknown };
 
 const formatDateTime = (iso: string) =>
   new Date(iso).toLocaleString("uk-UA", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
 const formatItems = (items: OrderRecord["items"]) =>
-  items.map((item) => `${item.name} ${item.flavor} ×${item.quantity}`).join(", ");
+  items.map((item) => `${item.name}${item.unit ? ` (${item.unit})` : ""} ×${item.quantity}`).join(", ");
 
 const AdminPage = () => {
   const [orders, setOrders] = useState<OrderRecord[]>([]);

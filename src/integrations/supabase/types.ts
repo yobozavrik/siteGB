@@ -48,12 +48,16 @@ export type Database = {
           comment: string | null
           country: string
           created_at: string
-          customer_email: string
+          customer_email: string | null
           customer_name: string
           customer_phone: string | null
+          delivery_type: string | null
           id: string
           items: Json
+          payment_method: string | null
+          shop_id: string | null
           status: string
+          time_slot: string | null
           total_price: number
           updated_at: string
         }
@@ -63,12 +67,16 @@ export type Database = {
           comment?: string | null
           country?: string
           created_at?: string
-          customer_email: string
+          customer_email?: string | null
           customer_name: string
           customer_phone?: string | null
+          delivery_type?: string | null
           id?: string
           items: Json
+          payment_method?: string | null
+          shop_id?: string | null
           status?: string
+          time_slot?: string | null
           total_price: number
           updated_at?: string
         }
@@ -78,12 +86,16 @@ export type Database = {
           comment?: string | null
           country?: string
           created_at?: string
-          customer_email?: string
+          customer_email?: string | null
           customer_name?: string
           customer_phone?: string | null
+          delivery_type?: string | null
           id?: string
           items?: Json
+          payment_method?: string | null
+          shop_id?: string | null
           status?: string
+          time_slot?: string | null
           total_price?: number
           updated_at?: string
         }

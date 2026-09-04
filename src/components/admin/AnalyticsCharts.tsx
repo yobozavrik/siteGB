@@ -13,7 +13,7 @@ const AnalyticsCharts = ({ orders }: Props) => {
     const map: Record<string, { name: string; quantity: number; revenue: number }> = {};
     orders.forEach((order) => {
       order.items.forEach((item) => {
-        const key = `${item.name} ${item.flavor}`;
+        const key = item.name;
         if (!map[key]) map[key] = { name: key, quantity: 0, revenue: 0 };
         map[key].quantity += item.quantity;
         map[key].revenue += item.price * item.quantity;
