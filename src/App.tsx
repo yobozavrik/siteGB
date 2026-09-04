@@ -4,18 +4,26 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/context/CartContext";
+import ScrollToTop from "@/components/ScrollToTop";
+
 import Index from "./pages/Index.tsx";
+import MenuPage from "./pages/MenuPage.tsx";
+import CategoryPage from "./pages/CategoryPage.tsx";
+import ProductPage from "./pages/ProductPage.tsx";
+import CartPage from "./pages/CartPage.tsx";
+import CheckoutPage from "./pages/CheckoutPage.tsx";
+import OrderPage from "./pages/OrderPage.tsx";
+import DeliveryPage from "./pages/DeliveryPage.tsx";
+import ShopsPage from "./pages/ShopsPage.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
-import CollaborationPage from "./pages/CollaborationPage.tsx";
-import ContactPage from "./pages/ContactPage.tsx";
-import WhereToBuyPage from "./pages/WhereToBuyPage.tsx";
-import AdminPage from "./pages/AdminPage.tsx";
+import ContactsPage from "./pages/ContactsPage.tsx";
+import FranchisePage from "./pages/FranchisePage.tsx";
 import BlogPage from "./pages/BlogPage.tsx";
 import BlogPostPage from "./pages/BlogPostPage.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
-import { landingPages } from "./data/landingPages";
+import AdminPage from "./pages/AdminPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import ScrollToTop from "./components/ScrollToTop.tsx";
+import { landingPages } from "./data/landingPages";
 
 const queryClient = new QueryClient();
 
@@ -29,17 +37,31 @@ const App = () => (
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route path="/menu/:category" element={<CategoryPage />} />
+            <Route path="/product/:slug" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/order/:id" element={<OrderPage />} />
+            <Route path="/delivery" element={<DeliveryPage />} />
+            <Route path="/shops" element={<ShopsPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/collaboration" element={<CollaborationPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/where-to-buy" element={<WhereToBuyPage />} />
+            <Route path="/contacts" element={<ContactsPage />} />
+            <Route path="/franchise" element={<FranchisePage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/landing/*" element={<Navigate to="/" replace />} />
             <Route path="/admin" element={<AdminPage />} />
+
+            {/* legacy Kratea paths */}
+            <Route path="/where-to-buy" element={<Navigate to="/shops" replace />} />
+            <Route path="/collaboration" element={<Navigate to="/franchise" replace />} />
+            <Route path="/contact" element={<Navigate to="/contacts" replace />} />
+            <Route path="/landing/*" element={<Navigate to="/" replace />} />
+
             {landingPages.map((p) => (
               <Route key={p.slug} path={p.path} element={<LandingPage />} />
             ))}
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

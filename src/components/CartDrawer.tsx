@@ -27,7 +27,7 @@ const CartDrawer = () => {
             <div className="flex items-center justify-between p-6 border-b border-border/30">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <ShoppingCart className="h-5 w-5 text-primary" />
-                Кошик{totalItems > 0 && <span className="text-muted-foreground font-normal">· {totalItems}</span>}
+                {totalItems > 0 ? `Кошик · ${totalItems}` : "Кошик"}
               </h2>
               <button onClick={() => setIsCartOpen(false)} aria-label="Закрити кошик" className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
                 <X className="h-5 w-5" />

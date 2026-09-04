@@ -6,8 +6,8 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import SEO from "@/components/SEO";
 import { blogPosts } from "@/data/blogPosts";
+import { SITE_URL } from "@/config/site";
 
-const SITE_URL = "https://kratea-official.com";
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const BlogPage = () => {
@@ -15,17 +15,17 @@ const BlogPage = () => {
     {
       "@context": "https://schema.org",
       "@type": "Blog",
-      name: "Блог KRATEA",
+      name: "Рецепти та поради — Галя Балувана",
       url: `${SITE_URL}/blog`,
       description:
-        "Статті про функціональні напої, рослинні адаптогени, натуральні енергетики та здоровий спосіб життя.",
+        "Як готувати й зберігати домашні напівфабрикати, меню на тиждень, поради для святкового столу.",
       blogPost: blogPosts.map((p) => ({
         "@type": "BlogPosting",
         headline: p.title,
         description: p.description,
         datePublished: p.date,
         url: `${SITE_URL}/blog/${p.slug}`,
-        author: { "@type": "Organization", name: "KRATEA" },
+        author: { "@type": "Organization", name: "Галя Балувана" },
       })),
     },
     {
@@ -41,8 +41,8 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Блог KRATEA — функціональні напої та адаптогени"
-        description="Гайди про кава-кава, канну, GABA, натуральні енергетики, методи зменшення стресу та переваги функціональних напоїв KRATEA."
+        title="Рецепти та поради — Галя Балувана"
+        description="Як правильно варити й смажити заморожені напівфабрикати, скільки їх зберігати, меню на тиждень і поради для святкового столу."
         path="/blog"
         type="website"
         jsonLd={jsonLd}
@@ -58,9 +58,9 @@ const BlogPage = () => {
             transition={{ duration: 0.8, ease }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-black mb-6">Блог KRATEA</h1>
+            <h1 className="text-5xl md:text-6xl font-black mb-6">Рецепти та поради</h1>
             <p className="text-xl text-foreground/60 max-w-3xl mx-auto leading-relaxed">
-              Усе про функціональні напої, рослинні інгредієнти, енергію, спокій та сучасний велнес.
+              Як готувати й зберігати домашні напівфабрикати, що приготувати на тиждень і на свято.
             </p>
           </motion.div>
 
