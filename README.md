@@ -191,11 +191,24 @@ scripts/screenshots.mjs # знімки для README (dev-тулінг, не в 
 e2e/                    # Playwright
 ```
 
+## Документація
+
+| Документ | Про що |
+|---|---|
+| [docs/CONTENT.md](docs/CONTENT.md) | **Як міняти товари, ціни, фото, магазини, доставку, тексти** — без програміста |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Стек, структура, скрипти, конвенції, як додати сторінку / товар / тест |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Маршрути, композиція головної, потік замовлення, продуктивність, адаптив |
+| [docs/DATA-MODEL.md](docs/DATA-MODEL.md) | Моделі даних, таблиці БД, RLS, edge-функції |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Vercel + Supabase: env, міграції, секрети, чек-лист запуску й приймання |
+| [docs/PLAN.md](docs/PLAN.md) | Пофазовий план перебудови з форку Kratea (виконано) |
+
+Індекс — [docs/README.md](docs/README.md).
+
 ## Конфігурація
 
 Усе, що залежить від оточення, — в `.env` (див. `.env.example`). Серверні секрети —
 токен Telegram, ключ адміна, AI-ключ — це секрети edge-функцій Supabase, у бандлі їх нема.
-Деталі в [SETUP.md](SETUP.md).
+Деталі в [SETUP.md](SETUP.md) та [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 > [!NOTE]
 > Адреси, телефони й фото магазинів у `src/data/shops.ts`, контакти в `src/config/site.ts`
