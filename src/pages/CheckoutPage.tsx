@@ -15,6 +15,7 @@ import {
 } from "@/lib/orders";
 import { deliveryZones, paymentMethods, timeSlots } from "@/data/delivery";
 import { shops, cities } from "@/data/shops";
+import { supabaseConfigured } from "@/integrations/supabase/client";
 
 interface FormState {
   name: string;
@@ -123,6 +124,13 @@ const CheckoutPage = () => {
     <SiteLayout seo={<SEO title="Оформлення замовлення — Галя Балувана" description="Доставка або самовивіз, зручний час, оплата на вибір." path="/checkout" />}>
       <div className="mx-auto max-w-5xl px-6 py-12">
         <h1 className="text-3xl font-black">Оформлення</h1>
+
+        {!supabaseConfigured && (
+          <p className="mt-4 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+            Приймання замовлень тимчасово недоступне (не налаштовано бекенд). Зателефонуйте
+            нам, будь ласка — контакти в футері.
+          </p>
+        )}
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-8">
