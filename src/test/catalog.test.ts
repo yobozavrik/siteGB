@@ -29,12 +29,17 @@ describe("catalog data", () => {
     }
   });
 
-  it("every product has sane numbers, an image and full KBJU", () => {
+  it("slugs are URL-safe (lowercase latin, digits, dashes)", () => {
+    for (const p of products) {
+      expect(p.slug, p.slug).toMatch(/^[a-z0-9-]+$/);
+    }
+  });
+
+  it("every product has sane numbers, a resolvable image and full KBJU", () => {
     for (const p of products) {
       expect(p.priceUAH, p.slug).toBeGreaterThan(0);
       expect(p.weightGrams, p.slug).toBeGreaterThan(0);
-      expect(p.images.length, p.slug).toBeGreaterThanOrEqual(1);
-      expect(p.images[0].startsWith("/"), p.slug).toBe(true);
+      expect(productImage(p).startsWith("/"), p.slug).toBe(true);
       for (const key of ["kcal", "protein", "fat", "carb"] as const) {
         expect(p.kbju[key], `${p.slug}.${key}`).toBeGreaterThanOrEqual(0);
       }

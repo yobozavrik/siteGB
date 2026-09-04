@@ -8,7 +8,8 @@ const columns = [
       { label: "Усі категорії", to: "/menu" },
       { label: "Вареники", to: "/menu/vareniki" },
       { label: "Пельмені та хінкалі", to: "/menu/pelmeni" },
-      { label: "Десерти та випічка", to: "/menu/deserty" },
+      { label: "Млинці", to: "/menu/mlyntsi" },
+      { label: "Пироги та штруделі", to: "/menu/pyrohy" },
     ],
   },
   {
