@@ -43,7 +43,7 @@ const BlogPostPage = () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Головна", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Блог", item: `${SITE_URL}/blog` },
+        { "@type": "ListItem", position: 2, name: "Новини", item: `${SITE_URL}/blog` },
         { "@type": "ListItem", position: 3, name: post.title, item: url },
       ],
     },
@@ -58,7 +58,7 @@ const BlogPostPage = () => {
       <article className="pt-32 section-padding">
         <div className="max-w-3xl mx-auto">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-primary mb-8">
-            <ArrowLeft className="h-4 w-4" /> Назад до блогу
+            <ArrowLeft className="h-4 w-4" /> Назад до новин
           </Link>
 
           <motion.header

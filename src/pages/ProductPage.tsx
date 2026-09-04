@@ -91,7 +91,7 @@ const ProductPage = () => {
         />
       }
     >
-      <div className="mx-auto max-w-6xl px-6 py-12">
+      <div className="gb-page mx-auto max-w-6xl px-6 py-16 md:px-12 lg:px-20">
         <nav className="text-xs text-muted-foreground">
           <Link to="/" className="hover:text-primary">Головна</Link> /{" "}
           <Link to="/menu" className="hover:text-primary">Меню</Link> /{" "}
@@ -116,7 +116,7 @@ const ProductPage = () => {
                 ))}
               </div>
             )}
-            <h1 className="text-2xl font-black md:text-3xl">{product.title}</h1>
+            <h1>{product.title}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Ручне ліплення · {product.unitLabel} · заморожені −18 °C
             </p>

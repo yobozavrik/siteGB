@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -67,6 +67,10 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Onest', sans-serif;
   }
+
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
 }
 
 @layer components {
@@ -114,6 +118,14 @@
 
   .section-padding {
     @apply py-20 md:py-32 px-6 md:px-12 lg:px-20;
+  }
+
+  .hero-shell {
+    background: linear-gradient(110deg, hsl(var(--background)) 0%, hsl(var(--background)) 56%, hsl(var(--muted)) 100%);
+  }
+
+  .hero-promo {
+    box-shadow: 0 30px 70px -30px rgba(48, 27, 19, 0.55);
   }
 
   .nav-link {
@@ -168,3 +180,61 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Official Galya Baluvana page structure. */
+.gb-official-home { background: #fff; color: #4f2b04; padding-top: 72px; }
+.gb-container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+.gb-section { padding: 88px 0; }
+.gb-section h2, .gb-banner h1, .gb-stats h2 { margin: 0; color: #4f2b04; font-family: 'Onest', sans-serif; font-size: clamp(30px, 4vw, 50px); font-weight: 400; letter-spacing: -.04em; }
+.gb-section h2 b, .gb-banner h1 b, .gb-stats h2 b { color: #e3000b; font-weight: inherit; }
+.gb-lead { margin: 20px 0 36px; max-width: 600px; color: #755836; font-size: 17px; line-height: 1.55; }
+.gb-banner { overflow: hidden; background: #fbfaf8; }
+.gb-banner__inner { display: grid; min-height: 430px; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 40px; }
+.gb-banner__copy { padding: 52px 0; }
+.gb-banner h1 { max-width: 500px; line-height: 1.04; }
+.gb-banner__inner > img { width: 100%; min-height: 430px; height: 100%; object-fit: cover; }
+.gb-banner__actions { display: flex; align-items: center; gap: 28px; margin-top: 38px; }
+.gb-button { display: inline-flex; align-items: center; justify-content: center; border-radius: 0; background: #4f2b04; padding: 15px 28px; color: #fff; font-weight: 700; transition: background .2s; }
+.gb-button:hover { background: #e3000b; color: #fff; }
+.gb-text-link { display: inline-flex; align-items: center; gap: 7px; color: #4f2b04; font-weight: 600; }
+.gb-text-link:hover { color: #e3000b; }
+.gb-categories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.gb-category { background: #fff; color: #4f2b04; font-size: 16px; font-weight: 600; }
+.gb-category img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.gb-category span { display: block; padding: 15px 0 4px; }
+.gb-category:hover { color: #e3000b; }
+.gb-center { text-align: center; margin-top: 42px; }
+.gb-why { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; }
+.gb-why > img { width: 100%; min-height: 390px; object-fit: cover; }
+.gb-reasons { display: grid; gap: 22px; margin-top: 34px; font-size: 20px; }
+.gb-reasons p { position: relative; margin: 0; padding-left: 38px; }
+.gb-reasons p::before { position: absolute; left: 0; top: 5px; width: 16px; height: 16px; border: 2px solid #e3000b; border-radius: 50%; content: ''; }
+.gb-section-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 34px; }
+.gb-posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.gb-post { color: #4f2b04; }
+.gb-post img { display: block; width: 100%; aspect-ratio: 1.55; object-fit: cover; }
+.gb-post span { display: block; margin-top: 16px; min-height: 48px; font-size: 18px; font-weight: 600; line-height: 1.25; }
+.gb-post small { display: block; margin-top: 10px; color: #987750; }
+.gb-shops { background: #f8f4ee; }
+.gb-shops__inner { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: center; }
+.gb-shops p { max-width: 420px; margin: 18px 0 30px; color: #755836; font-size: 17px; }
+.gb-map-placeholder { display: flex; min-height: 280px; align-items: center; justify-content: center; gap: 14px; border: 1px solid #dcc8af; background: repeating-linear-gradient(45deg, #fff 0 18px, #fbf5ed 18px 36px); color: #e3000b; font-weight: 700; }
+.gb-stats { padding: 82px 0; background: #4f2b04; color: #fff; text-align: center; }
+.gb-stats h2 { color: #fff; }
+.gb-stats > div > div { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 52px; }
+.gb-stats p { margin: 0; }
+.gb-stats strong { display: block; color: #dcac78; font-size: clamp(48px, 6vw, 78px); font-weight: 500; line-height: 1; }
+.gb-stats span { display: block; margin-top: 12px; color: #fff; font-size: 16px; }
+@media (max-width: 760px) { .gb-official-home { padding-top: 72px; } .gb-container { width: min(100% - 32px, 1180px); } .gb-section { padding: 52px 0; } .gb-banner__inner, .gb-why, .gb-shops__inner { grid-template-columns: 1fr; gap: 0; } .gb-banner__copy { padding: 48px 0 30px; } .gb-banner__inner > img { min-height: 250px; } .gb-categories { grid-template-columns: repeat(2, 1fr); gap: 16px; } .gb-why { gap: 30px; } .gb-why > img { min-height: 260px; } .gb-posts { grid-template-columns: 1fr; gap: 28px; } .gb-stats > div > div { grid-template-columns: 1fr; margin-top: 34px; } }
+
+.gb-page { color: #4f2b04; }
+.gb-page h1 { margin: 0; color: #4f2b04; font-size: clamp(34px, 4.4vw, 56px); font-weight: 400; letter-spacing: -.045em; line-height: 1.05; }
+.gb-page h1 b { color: #e3000b; font-weight: inherit; }
+.gb-page h2 { color: #4f2b04; font-size: 25px; font-weight: 600; }
+.gb-page__lead { max-width: 720px; margin: 20px 0 34px; color: #755836; font-size: 17px; line-height: 1.55; }
+.gb-filter { border: 1px solid #dcc8af; background: #fff; padding: 9px 14px; color: #4f2b04; font-size: 14px; font-weight: 600; transition: .2s; }
+.gb-filter:hover { border-color: #e3000b; color: #e3000b; }
+.gb-shop-map, .gb-form-box, .gb-store-card, .gb-stat-card { border: 1px solid #e5d6c5; background: #fff; box-shadow: none; }
+.gb-store-card { padding: 18px; transition: border-color .2s; }
+.gb-store-card:hover { border-color: #e3000b; }
+.gb-form-box h2 { margin-top: 0; }

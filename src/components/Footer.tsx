@@ -14,7 +14,7 @@ const columns = [
     title: "Клієнту",
     links: [
       { label: "Магазини", to: "/shops" },
-      { label: "Блог", to: "/blog" },
+      { label: "Новини", to: "/blog" },
       { label: "Зворотній зв'язок", to: "/contacts" },
       { label: "Франшиза", to: "/franchise" },
     ],
@@ -40,8 +40,7 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div>
         <div className="flex items-center gap-2.5">
-          <img src="/logo.svg" alt="" width="44" height="44" className="h-11 w-11 shrink-0" />
-          <span className="text-[13px] font-black uppercase leading-none tracking-wide">Галя<br />Балувана</span>
+          <img src="https://galia-baluvana.com/images/logo.svg" alt="Логотип Галя Балувана" width="152" height="48" className="h-10 w-auto max-w-[142px] shrink-0" />
         </div>
         <p className="mt-5 text-sm text-white/55 max-w-xs">{BRAND_TAGLINE}.</p>
         <div className="mt-5 space-y-1 text-sm text-white/70">

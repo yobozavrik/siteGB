@@ -20,6 +20,17 @@ import { SHOW_PRICES, NETWORK_STATS } from "@/config/site";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+const officialCategoryImages: Record<string, string> = {
+  homilky: "https://galia-baluvana.com/storage/uploads/images/bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9/bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9_res600x400_opt.jpg",
+  "mlyntsi-vareniki": "https://galia-baluvana.com/storage/uploads/images/KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM/KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM_res600x400_opt.jpg",
+  kartoplyani: "https://galia-baluvana.com/storage/uploads/images/XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2/XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2_res600x400_opt.jpg",
+  kovbasy: "https://galia-baluvana.com/storage/uploads/images/2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY/2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY_res600x400_opt.jpg",
+  kotlety: "https://galia-baluvana.com/storage/uploads/images/7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U/7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U_res600x400_opt.jpg",
+  pelmeni: "https://galia-baluvana.com/storage/uploads/images/heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4/heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4_res600x400_opt.jpg",
+  "pizza-pyrohy": "https://galia-baluvana.com/storage/uploads/images/btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR/btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR_res600x400_opt.jpg",
+  syrnyky: "https://galia-baluvana.com/storage/uploads/images/1Vq3uTefVtVUIM2zSMETMnqqUVcWrX5YDHxI4dtf/1Vq3uTefVtVUIM2zSMETMnqqUVcWrX5YDHxI4dtf_res600x400_opt.jpg",
+};
+
 const Eyebrow = ({ children }: { children: ReactNode }) => (
   <motion.span
     initial={{ opacity: 0, letterSpacing: "0.5em" }}
@@ -50,7 +61,7 @@ export const MenuSection = () => (
           Оберіть свій <span className="text-gradient-brand">смак</span>
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Вісім категорій ручного ліплення. Ціна показується за упаковку і за 100 г.
+          Вісім категорій домашніх страв — обирайте те, що смакуватиме саме вам.
         </p>
       </motion.div>
 
@@ -66,11 +77,15 @@ export const MenuSection = () => (
           >
             <Link
               to={`/menu/${c.slug}`}
-              className="glass-card group flex h-full min-h-40 flex-col justify-between p-6 transition-colors hover:border-primary/40"
+              className="glass-card group relative flex min-h-56 flex-col justify-end overflow-hidden p-6 transition-colors hover:border-primary/40"
             >
-              <span className="text-xs font-black text-primary">0{i + 1}</span>
-              <span className="text-lg font-black leading-tight">{c.title}</span>
-              <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              {officialCategoryImages[c.slug] && (
+                <img src={officialCategoryImages[c.slug]} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              )}
+              <span className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/25 to-transparent" />
+              <span className="relative text-xs font-black text-white/80">0{i + 1}</span>
+              <span className="relative mt-auto text-lg font-black leading-tight text-white">{c.title}</span>
+              <span className="relative mt-2 flex items-center gap-1 text-xs text-white/80">
                 {productsByCategory(c.slug).length} позицій
                 <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </span>
@@ -405,8 +420,8 @@ export const BlogSection = () => (
         transition={{ duration: 0.6, ease }}
         className="mb-14 text-center"
       >
-        <Eyebrow>Рецепти та поради</Eyebrow>
-        <h2 className="text-4xl font-black md:text-6xl">Корисне про домашній смак</h2>
+        <Eyebrow>Новини</Eyebrow>
+        <h2 className="font-display text-4xl font-semibold md:text-6xl">Новини та корисне</h2>
       </motion.div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

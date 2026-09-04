@@ -32,10 +32,9 @@ const FranchisePage = () => (
       />
     }
   >
-    <div className="mx-auto max-w-4xl px-6 py-12">
-      <p className="text-sm font-bold uppercase tracking-[.25em] text-primary">Франшиза</p>
-      <h1 className="mt-3 text-3xl font-black md:text-4xl">Відкрийте свій магазин «Галя Балувана»</h1>
-      <p className="mt-4 max-w-2xl text-muted-foreground">
+    <div className="gb-page mx-auto max-w-4xl px-6 py-16 md:px-12 lg:px-20">
+      <h1>Відкрийте свій магазин <b>«Галя Балувана»</b></h1>
+      <p className="gb-page__lead">
         Формат — виробництво-магазин: невеликий цех ручного ліплення за склом і вітрина з
         готовими напівфабрикатами. Ми передаємо рецептуру, стандарти й підтримку, ви керуєте
         точкою у своєму місті.
@@ -50,8 +49,8 @@ const FranchisePage = () => (
         ))}
       </ul>
 
-      <div className="mt-10 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-black">Заявка на партнерство</h2>
+      <div className="gb-form-box mt-10 p-6">
+        <h2>Заявка на партнерство</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Розкажіть про місто й приміщення — надішлемо актуальні умови. Або пишіть на{" "}
           <a href={`mailto:${FRANCHISE_EMAIL}`} className="font-semibold text-primary">{FRANCHISE_EMAIL}</a>.

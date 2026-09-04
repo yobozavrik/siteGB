@@ -1,18 +1,6 @@
 import SiteLayout from "@/components/SiteLayout";
 import SEO from "@/components/SEO";
-import HeroSection from "@/components/HeroSection";
-import FAQSection from "@/components/FAQSection";
-import {
-  MenuSection,
-  HitsSection,
-  WhySection,
-  StatsSection,
-  ProcessShowcase,
-  ShopsSection,
-  BlogSection,
-  FeedbackSection,
-  FranchiseSection,
-} from "@/components/GalyaSections";
+import OfficialHome from "@/components/OfficialHome";
 import { faqItems } from "@/data/faq";
 import { activeProducts, productImage } from "@/data/catalog";
 import { SITE_URL, BRAND, PHONE, SHOW_PRICES } from "@/config/site";
@@ -88,17 +76,7 @@ const Index = () => (
       />
     }
   >
-    <HeroSection />
-    <HitsSection />
-    <MenuSection />
-    <WhySection />
-    <StatsSection />
-    <ProcessShowcase />
-    <ShopsSection />
-    <BlogSection />
-    <FAQSection />
-    <FeedbackSection />
-    <FranchiseSection />
+    <OfficialHome />
   </SiteLayout>
 );
 

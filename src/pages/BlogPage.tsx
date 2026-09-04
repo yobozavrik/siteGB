@@ -15,7 +15,7 @@ const BlogPage = () => {
     {
       "@context": "https://schema.org",
       "@type": "Blog",
-      name: "Рецепти та поради — Галя Балувана",
+      name: "Новини — Галя Балувана",
       url: `${SITE_URL}/blog`,
       description:
         "Як готувати й зберігати домашні напівфабрикати, меню на тиждень, поради для святкового столу.",
@@ -33,7 +33,7 @@ const BlogPage = () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Головна", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Блог", item: `${SITE_URL}/blog` },
+        { "@type": "ListItem", position: 2, name: "Новини", item: `${SITE_URL}/blog` },
       ],
     },
   ];
@@ -41,8 +41,8 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Рецепти та поради — Галя Балувана"
-        description="Як правильно варити й смажити заморожені напівфабрикати, скільки їх зберігати, меню на тиждень і поради для святкового столу."
+        title="Новини — Галя Балувана"
+        description="Новини мережі, оновлення меню та корисні поради про домашні страви."
         path="/blog"
         type="website"
         jsonLd={jsonLd}
@@ -50,17 +50,17 @@ const BlogPage = () => {
       <Header />
       <CartDrawer />
 
-      <section className="pt-32 section-padding">
-        <div className="max-w-6xl mx-auto">
+      <section className="pt-20">
+        <div className="gb-page max-w-6xl mx-auto px-6 py-16 md:px-12 lg:px-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-black mb-6">Рецепти та поради</h1>
+            <h1>Наші <b>Новини</b></h1>
             <p className="text-xl text-foreground/60 max-w-3xl mx-auto leading-relaxed">
-              Як готувати й зберігати домашні напівфабрикати, що приготувати на тиждень і на свято.
+              Оновлення мережі, новинки меню та корисне про домашні страви.
             </p>
           </motion.div>
 

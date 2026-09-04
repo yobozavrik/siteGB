@@ -38,16 +38,15 @@ const ShopsPage = () => {
         />
       }
     >
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <p className="text-sm font-bold uppercase tracking-[.25em] text-primary">Наші магазини</p>
-        <h1 className="mt-3 text-4xl font-black md:text-5xl">Знайдіть Галя Балувана у своєму місті</h1>
-        <p className="mt-4 max-w-2xl text-muted-foreground">
+      <div className="gb-page mx-auto max-w-7xl px-6 py-16 md:px-12 lg:px-20">
+        <h1>Наші <b>Магазини</b></h1>
+        <p className="gb-page__lead">
           {totalShops} магазинів у {totalCities} містах, у {productionShops.length} з них — виробництво
           за склом. Оберіть місто на мапі.
         </p>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1.1fr_1fr]">
-          <div className="rounded-2xl border border-border bg-card p-4">
+          <div className="gb-shop-map p-4">
             <div className="aspect-[100/85] w-full">
               <UkraineMap cities={mapCities} selectedCity={selectedCity} onCityClick={setSelectedCity} />
             </div>
@@ -75,7 +74,7 @@ const ShopsPage = () => {
             </h2>
             <div className="mt-4 space-y-3">
               {visible.map((s) => (
-                <article key={s.id} className="rounded-xl border border-border bg-card p-4">
+                <article key={s.id} className="gb-store-card">
                   <div className="flex items-start gap-2">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                     <div>

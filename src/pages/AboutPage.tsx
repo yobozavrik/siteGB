@@ -29,9 +29,8 @@ const AboutPage = () => (
       />
     }
   >
-    <div className="mx-auto max-w-3xl px-6 py-12">
-      <p className="text-sm font-bold uppercase tracking-[.25em] text-primary">Про нас</p>
-      <h1 className="mt-3 text-4xl font-black md:text-5xl">Кухня за склом</h1>
+    <div className="gb-page mx-auto max-w-3xl px-6 py-16 md:px-12 lg:px-20">
+      <h1>Про <b>нас</b></h1>
 
       <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
         Ми почали з простої ідеї: напівфабрикати мають бути такими, які не соромно приготувати
@@ -50,7 +49,7 @@ const AboutPage = () => (
 
       <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border bg-card p-4 text-center">
+          <div key={s.label} className="gb-stat-card p-4 text-center">
             <div className="text-2xl font-black text-primary">{s.value}</div>
             <div className="mt-1 text-[11px] text-muted-foreground">{s.label}</div>
           </div>

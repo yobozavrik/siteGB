@@ -25,8 +25,8 @@ const ContactsPage = () => (
       />
     }
   >
-    <div className="mx-auto max-w-5xl px-6 py-12">
-      <h1 className="text-3xl font-black md:text-4xl">Контакти</h1>
+    <div className="gb-page mx-auto max-w-5xl px-6 py-16 md:px-12 lg:px-20">
+      <h1>Зворотній <b>зв'язок</b></h1>
 
       <div className="mt-8 grid gap-10 md:grid-cols-2">
         <div className="space-y-4 text-sm">
@@ -66,8 +66,8 @@ const ContactsPage = () => (
           <p className="text-xs text-muted-foreground">Відповідаємо: {SUPPORT_HOURS}.</p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-6">
-          <h2 className="mb-4 text-lg font-black">Написати нам</h2>
+        <div className="gb-form-box p-6">
+          <h2>Написати нам</h2>
           <ContactForm subjectTag="Контакт" messagePlaceholder="Питання, відгук, пропозиція…" />
         </div>
       </div>

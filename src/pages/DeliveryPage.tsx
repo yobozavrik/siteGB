@@ -23,9 +23,9 @@ const DeliveryPage = () => (
       />
     }
   >
-    <div className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-3xl font-black md:text-4xl">Доставка та оплата</h1>
-      <p className="mt-3 text-muted-foreground">
+    <div className="gb-page mx-auto max-w-3xl px-6 py-16 md:px-12 lg:px-20">
+      <h1>Доставка та <b>оплата</b></h1>
+      <p className="gb-page__lead">
         Доставляємо щодня {DELIVERY_HOURS} у день замовлення. Мінімальна сума замовлення —{" "}
         {MIN_ORDER_UAH} ₴.
       </p>

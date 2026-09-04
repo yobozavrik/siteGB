@@ -792,7 +792,33 @@ export const productsByCategory = (categorySlug: string) =>
 export const pricePer100g = (p: Pick<Product, "priceUAH" | "weightGrams">) =>
   Math.round((p.priceUAH / p.weightGrams) * 100);
 
-export const productImage = (p: Pick<Product, "images">) => p.images[0] ?? "/placeholder.svg";
+const officialCategoryFallbacks: Record<string, string> = {
+  homilky: "https://galia-baluvana.com/storage/uploads/images/bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9/bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9_res600x400_opt.jpg",
+  "mlyntsi-vareniki": "https://galia-baluvana.com/storage/uploads/images/KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM/KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM_res600x400_opt.jpg",
+  kartoplyani: "https://galia-baluvana.com/storage/uploads/images/XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2/XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2_res600x400_opt.jpg",
+  kovbasy: "https://galia-baluvana.com/storage/uploads/images/2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY/2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY_res600x400_opt.jpg",
+  kotlety: "https://galia-baluvana.com/storage/uploads/images/7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U/7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U_res600x400_opt.jpg",
+  pelmeni: "https://galia-baluvana.com/storage/uploads/images/heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4/heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4_res600x400_opt.jpg",
+  "pizza-pyrohy": "https://galia-baluvana.com/storage/uploads/images/btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR/btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR_res600x400_opt.jpg",
+  syrnyky: "https://galia-baluvana.com/storage/uploads/images/1Vq3uTefVtVUIM2zSMETMnqqUVcWrX5YDHxI4dtf/1Vq3uTefVtVUIM2zSMETMnqqUVcWrX5YDHxI4dtf_res600x400_opt.jpg",
+};
+
+const officialProductImages: Record<string, string> = {
+  "vareniki-z-kartopleyu": "https://galia-baluvana.com/storage/uploads/images/XEMCKgG3uzGljCKtt5XSMN8mU3oBZ2AEL96I9Uny/XEMCKgG3uzGljCKtt5XSMN8mU3oBZ2AEL96I9Uny_res600x400_opt.jpg",
+  "vareniki-z-kartopleyu-ta-grybamy": "https://galia-baluvana.com/storage/uploads/images/eQ1XFBK7pk7yk6TkpxxtNczXtrVwt1u5jFTzFIi1/eQ1XFBK7pk7yk6TkpxxtNczXtrVwt1u5jFTzFIi1_res600x400_opt.jpg",
+  "vareniki-zi-shpynatom-i-solonym-syrom": "https://galia-baluvana.com/storage/uploads/images/cVOkwvZx94wd66gM6Q61qVPu1nMX9CcT74BWVC9t/cVOkwvZx94wd66gM6Q61qVPu1nMX9CcT74BWVC9t_res600x400_opt.jpg",
+  "vareniki-z-kapustoyu": "https://galia-baluvana.com/storage/uploads/images/iyzlY7G4G47oTPUL0ghrUzl8OY7GLfy5Ke9sRacL/iyzlY7G4G47oTPUL0ghrUzl8OY7GLfy5Ke9sRacL_res600x400_opt.jpg",
+  "vareniki-z-solonym-syrom": "https://galia-baluvana.com/storage/uploads/images/9niBPar9dZUanx7Vrsu3qrykNBK2yOBmxKoLlpbd/9niBPar9dZUanx7Vrsu3qrykNBK2yOBmxKoLlpbd_res600x400_opt.jpg",
+  "vareniki-z-vyshneyu": "https://galia-baluvana.com/storage/uploads/images/VH0jhSFKJulTFE0Oolb6rkIeUjkRrUHBo9JTWcec/VH0jhSFKJulTFE0Oolb6rkIeUjkRrUHBo9JTWcec_res600x400_opt.jpg",
+  "mlyntsi-z-kurkoyu-ta-grybamy": "https://galia-baluvana.com/storage/uploads/images/Z2ow7OumUyMhYY5okYRPgzhMmIysMpWR2r1uZ3br/Z2ow7OumUyMhYY5okYRPgzhMmIysMpWR2r1uZ3br_res600x400_opt.jpg",
+  "mlyntsi-shpynatni-z-krem-syrom": "https://galia-baluvana.com/storage/uploads/images/v4FIziHWbgqI81pto8JGCkTvfgSFA2ZJv2jKuCi9/v4FIziHWbgqI81pto8JGCkTvfgSFA2ZJv2jKuCi9_res600x400_opt.jpg",
+  "mlyntsi-z-polunytseyu-i-syrom": "https://galia-baluvana.com/storage/uploads/images/0GhvyM06W4IZq5dMjG7gBoAFekRI6uzPGXEdTyY0/0GhvyM06W4IZq5dMjG7gBoAFekRI6uzPGXEdTyY0_res600x400_opt.jpg",
+  "mlyntsi-z-makom-ta-vyshneyu": "https://galia-baluvana.com/storage/uploads/images/agDW9BFx60UoXN6alItu0hujcGSXqpTcuhwSh2hi/agDW9BFx60UoXN6alItu0hujcGSXqpTcuhwSh2hi_res600x400_opt.jpg",
+  "bendaryky-z-kurkoyu-ta-motsareloyu": "https://galia-baluvana.com/storage/uploads/images/uGiVlAXobIlbUihfRBEiAWS5rOTZPu1Fm4VWQxUW/uGiVlAXobIlbUihfRBEiAWS5rOTZPu1Fm4VWQxUW_res600x400_opt.jpg",
+};
+
+export const productImage = (p: Pick<Product, "images"> & Partial<Pick<Product, "slug" | "categorySlug">>) =>
+  p.images[0] ?? (p.slug ? officialProductImages[p.slug] : undefined) ?? (p.categorySlug ? officialCategoryFallbacks[p.categorySlug] : undefined) ?? "/placeholder.svg";
 
 /** "з цим беруть" — same category first, then fill from siblings. */
 export const relatedProducts = (slug: string, limit = 4): Product[] => {
