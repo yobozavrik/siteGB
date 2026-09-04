@@ -95,7 +95,7 @@ const CustomerSupportChat = () => {
       <motion.button
         onClick={() => setOpen(true)}
         aria-label="Відкрити чат підтримки"
-        className={`fixed bottom-6 right-6 z-[70] rounded-full bg-primary p-4 text-primary-foreground shadow-lg ${open ? "hidden" : ""}`}
+        className={`fixed bottom-4 right-4 z-[70] rounded-full bg-primary p-3.5 text-primary-foreground shadow-lg sm:bottom-6 sm:right-6 sm:p-4 ${open ? "hidden" : ""}`}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >

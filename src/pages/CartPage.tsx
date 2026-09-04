@@ -30,17 +30,21 @@ const CartPage = () => {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="grid grid-cols-[64px_1fr_auto] items-center gap-4 border-b border-border py-4"
+                  className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-border py-4"
                 >
-                  <img src={item.image} alt="" className="h-16 w-16 rounded-lg border border-border object-cover" />
-                  <div className="min-w-0">
+                  <img
+                    src={item.image}
+                    alt=""
+                    className="h-16 w-16 shrink-0 rounded-lg border border-border object-cover"
+                  />
+                  <div className="min-w-0 flex-1 basis-40">
                     <Link to={`/product/${item.slug}`} className="font-bold leading-tight hover:text-primary">
                       {item.title}
                     </Link>
                     <p className="text-xs text-muted-foreground">{item.unitLabel}</p>
                     <p className="text-sm font-semibold text-primary">{item.priceUAH} ₴</p>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="ml-auto flex items-center gap-3 sm:gap-4">
                     <div className="flex items-center overflow-hidden rounded-lg border border-border">
                       <button onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label="Менше" className="grid h-9 w-9 place-items-center hover:bg-muted">
                         <Minus size={14} />
@@ -50,8 +54,8 @@ const CartPage = () => {
                         <Plus size={14} />
                       </button>
                     </div>
-                    <div className="w-20 text-right font-black tabular-nums">{item.priceUAH * item.quantity} ₴</div>
-                    <button onClick={() => removeItem(item.id)} aria-label="Прибрати" className="text-muted-foreground hover:text-destructive">
+                    <div className="w-20 shrink-0 text-right font-black tabular-nums">{item.priceUAH * item.quantity} ₴</div>
+                    <button onClick={() => removeItem(item.id)} aria-label="Прибрати" className="shrink-0 text-muted-foreground hover:text-destructive">
                       <X size={16} />
                     </button>
                   </div>

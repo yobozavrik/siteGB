@@ -101,8 +101,8 @@ const ProductPage = () => {
           <span className="text-foreground">{product.title}</span>
         </nav>
 
-        <div className="mt-6 grid gap-8 md:grid-cols-2">
-          <div className="overflow-hidden rounded-2xl border border-border bg-muted">
+        <div className="mt-6 grid gap-8 lg:grid-cols-2">
+          <div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-muted lg:max-w-none">
             <img src={image} alt={product.title} className="aspect-square w-full object-cover" />
           </div>
 
@@ -126,12 +126,12 @@ const ProductPage = () => {
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center overflow-hidden rounded-xl border border-border">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="flex w-max items-center overflow-hidden rounded-xl border border-border">
                 <button
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
                   aria-label="Менше"
-                  className="grid h-11 w-11 place-items-center hover:bg-muted"
+                  className="grid h-11 w-12 place-items-center hover:bg-muted"
                 >
                   <Minus size={16} />
                 </button>
@@ -139,21 +139,21 @@ const ProductPage = () => {
                 <button
                   onClick={() => setQty((q) => Math.min(20, q + 1))}
                   aria-label="Більше"
-                  className="grid h-11 w-11 place-items-center hover:bg-muted"
+                  className="grid h-11 w-12 place-items-center hover:bg-muted"
                 >
                   <Plus size={16} />
                 </button>
               </div>
               <button
                 onClick={add}
-                className="flex-1 rounded-xl bg-primary px-6 py-3 font-bold text-primary-foreground transition-transform active:scale-[0.98]"
+                className="flex-1 whitespace-nowrap rounded-xl bg-primary px-6 py-3.5 font-bold text-primary-foreground transition-transform active:scale-[0.98]"
               >
                 Додати в кошик · {product.priceUAH * qty} ₴
               </button>
             </div>
 
             <Tabs defaultValue="composition" className="mt-8">
-              <TabsList className="flex flex-wrap">
+              <TabsList className="scrollbar-hide flex w-full max-w-full justify-start overflow-x-auto">
                 <TabsTrigger value="composition">Склад</TabsTrigger>
                 <TabsTrigger value="cooking">Приготування</TabsTrigger>
                 <TabsTrigger value="storage">Зберігання</TabsTrigger>

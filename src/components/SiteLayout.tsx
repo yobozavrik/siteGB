@@ -20,7 +20,8 @@ const SiteLayout = ({ children, seo, offsetHeader = true }: SiteLayoutProps) => 
     {seo}
     <Header />
     <CartDrawer />
-    <main className={`flex-1 ${offsetHeader ? "pt-[72px]" : ""}`}>{children}</main>
+    {/* pb clearance on mobile so a page's last CTA never sits under the chat FAB */}
+    <main className={`flex-1 pb-24 sm:pb-0 ${offsetHeader ? "pt-[72px]" : ""}`}>{children}</main>
     <Footer />
     {supabaseConfigured && (
       <Suspense fallback={null}>

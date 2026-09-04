@@ -51,9 +51,9 @@ const ProductCard = ({ product }: { product: Product }) => {
           <button
             onClick={add}
             aria-label={`Додати «${product.title}» у кошик`}
-            className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-primary-foreground transition-transform active:scale-95"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-transform active:scale-95"
           >
-            <Plus size={16} />
+            <Plus size={18} />
           </button>
         </div>
       </div>

@@ -250,16 +250,20 @@ const CheckoutPage = () => {
               <h2 className="mb-3 text-sm font-bold uppercase tracking-wider text-muted-foreground">Оплата</h2>
               <div className="space-y-2">
                 {availablePayments.map((p) => (
-                  <label key={p.id} className="flex cursor-pointer items-center gap-3 text-sm">
+                  <label key={p.id} className="flex cursor-pointer items-start gap-3 text-sm">
                     <input
                       type="radio"
                       name="payment"
                       checked={form.paymentMethod === p.id}
                       onChange={() => set("paymentMethod", p.id)}
-                      className="accent-primary"
+                      className="mt-0.5 accent-primary"
                     />
-                    {PAYMENT_LABELS[p.id]}
-                    {p.note && <span className="text-xs text-muted-foreground">— {p.note}</span>}
+                    <span>
+                      {PAYMENT_LABELS[p.id]}
+                      {p.note && (
+                        <span className="block text-xs text-muted-foreground sm:ml-1 sm:inline">{p.note}</span>
+                      )}
+                    </span>
                   </label>
                 ))}
               </div>
