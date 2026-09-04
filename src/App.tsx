@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -21,9 +22,11 @@ import FranchisePage from "./pages/FranchisePage.tsx";
 import BlogPage from "./pages/BlogPage.tsx";
 import BlogPostPage from "./pages/BlogPostPage.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
-import AdminPage from "./pages/AdminPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { landingPages } from "./data/landingPages";
+
+// Admin pulls in recharts — keep it out of the storefront bundle.
+const AdminPage = lazy(() => import("./pages/AdminPage.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -50,7 +53,14 @@ const App = () => (
             <Route path="/franchise" element={<FranchisePage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/admin" element={<AdminPage />} />
+            <Route
+              path="/admin"
+              element={
+                <Suspense fallback={<div className="p-10 text-center text-muted-foreground">Завантаження…</div>}>
+                  <AdminPage />
+                </Suspense>
+              }
+            />
 
             {/* legacy Kratea paths */}
             <Route path="/where-to-buy" element={<Navigate to="/shops" replace />} />
