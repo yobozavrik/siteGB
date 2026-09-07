@@ -148,20 +148,24 @@ const ProductPage = () => {
                 </div>
               </>
             ) : (
-              <div className="my-5 rounded-xl border border-border bg-muted/40 p-4">
-                <p className="text-sm text-muted-foreground">
-                  Ціну та наявність уточнюйте в магазині або за телефоном — асортимент і
-                  ціни залежать від точки.
+              <div className="my-5 rounded-2xl border border-primary/20 bg-primary/5 p-5">
+                <p className="text-sm font-medium text-foreground/80">
+                  Страва виготовляється власноруч майстринями на відкритій кухні. Наявність та асортимент уточнюйте у найближчому магазині у Чернівцях або за телефоном гарячої лінії.
                 </p>
-                <a
-                  href={`tel:${PHONE}`}
-                  className="mt-3 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground"
-                >
-                  <Phone size={16} /> {PHONE_DISPLAY}
-                </a>
-                <Link to="/shops" className="ml-3 text-sm font-semibold text-primary hover:underline">
-                  Знайти магазин
-                </Link>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <a
+                    href={`tel:${PHONE}`}
+                    className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-primary-foreground shadow-sm hover:opacity-90 transition"
+                  >
+                    <Phone size={14} /> {PHONE_DISPLAY}
+                  </a>
+                  <Link
+                    to="/shops"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2.5 text-xs font-bold text-foreground hover:border-primary transition"
+                  >
+                    14 магазинів у Чернівцях →
+                  </Link>
+                </div>
               </div>
             )}
 

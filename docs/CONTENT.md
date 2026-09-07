@@ -35,7 +35,7 @@
 | SEO-сторінки під міста / запити | `src/data/landingPages.ts` |
 | Логотип | `public/logo.svg` — заміни на офіційний файл франшизи (той самий шлях, бажано білий варіант для темної шапки) |
 | Тексти секцій головної | `src/components/GalyaSections.tsx`, `HeroSection.tsx` |
-| Мережеві числа (700 / 9000 / 200) | `src/config/site.ts` → `NETWORK_STATS` |
+| Публічні показники (20 магазинів у Чернівцях / 200+ робочих місць / 200+ страв) | `src/config/site.ts` → `NETWORK_STATS` |
 | Тексти «Про нас» | `src/pages/AboutPage.tsx` |
 | Промо-рядок під шапкою | зараз нема окремого — у `HeroSection`/шапці |
 | `<title>` / опис головної для Google | `src/pages/Index.tsx` (компонент `<SEO>`) та `index.html` |

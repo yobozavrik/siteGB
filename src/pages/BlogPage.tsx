@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Calendar, Clock, Tag } from "lucide-react";
+import { useMemo, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
@@ -10,12 +11,30 @@ import { SITE_URL } from "@/config/site";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+const typeFilters = [
+  { value: "all", label: "Усі матеріали" },
+  { value: "news", label: "Новини" },
+  { value: "story", label: "Історії" },
+  { value: "blog", label: "Блог" },
+  { value: "lifehack", label: "Лайфхаки" },
+] as const;
+
 const BlogPage = () => {
+  const [activeType, setActiveType] = useState<(typeof typeFilters)[number]["value"]>("all");
+  const [activeYear, setActiveYear] = useState("all");
+  const years = useMemo(
+    () => [...new Set(blogPosts.map((post) => post.date.slice(0, 4)))].sort((a, b) => b.localeCompare(a)),
+    [],
+  );
+  const visiblePosts = useMemo(
+    () => blogPosts.filter((post) => (activeType === "all" || post.type === activeType) && (activeYear === "all" || post.date.startsWith(activeYear))),
+    [activeType, activeYear],
+  );
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "Blog",
-      name: "Новини — Галя Балувана",
+      name: "Блог — Галя Балувана",
       url: `${SITE_URL}/blog`,
       description:
         "Як готувати й зберігати домашні напівфабрикати, меню на тиждень, поради для святкового столу.",
@@ -41,8 +60,8 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Новини — Галя Балувана"
-        description="Новини мережі, оновлення меню та корисні поради про домашні страви."
+        title="Блог та Новини — Галя Балувана Чернівці"
+        description="Новини мережі у Чернівцях, кулінарні секрети, рецепти та лайфхаки про домашні напівфабрикати ручного ліплення."
         path="/blog"
         type="website"
         jsonLd={jsonLd}
@@ -58,14 +77,35 @@ const BlogPage = () => {
             transition={{ duration: 0.8, ease }}
             className="text-center mb-16"
           >
-            <h1>Наші <b>Новини</b></h1>
+            <h1>Блог та <b>Новини</b></h1>
             <p className="text-xl text-foreground/60 max-w-3xl mx-auto leading-relaxed">
-              Оновлення мережі, новинки меню та корисне про домашні страви.
+              Новини мережі Галя Балувана Чернівці, секрети відкритої кухні, рецепти та корисні лайфхаки для ідеального приготування страв.
             </p>
           </motion.div>
 
+          <div className="mb-10 space-y-4" aria-label="Фільтри блогу">
+            <div className="flex flex-wrap justify-center gap-2">
+              {typeFilters.map((filter) => (
+                <button
+                  key={filter.value}
+                  type="button"
+                  onClick={() => setActiveType(filter.value)}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${activeType === filter.value ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap justify-center gap-2">
+              <button type="button" onClick={() => setActiveYear("all")} className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${activeYear === "all" ? "bg-foreground text-background" : "bg-muted text-foreground/70 hover:bg-muted/70"}`}>Усі роки</button>
+              {years.map((year) => (
+                <button key={year} type="button" onClick={() => setActiveYear(year)} className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${activeYear === year ? "bg-foreground text-background" : "bg-muted text-foreground/70 hover:bg-muted/70"}`}>{year}</button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogPosts.map((post, i) => (
+            {visiblePosts.map((post, i) => (
               <motion.article
                 key={post.slug}
                 initial={{ opacity: 0, y: 30 }}
@@ -76,7 +116,7 @@ const BlogPage = () => {
                 <div className="flex items-center gap-3 text-xs text-foreground/50 mb-3">
                   <span className="inline-flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
-                    {new Date(post.date).toLocaleDateString("uk-UA", { day: "numeric", month: "long", year: "numeric" })}
+                    {post.displayDate ?? new Date(post.date).toLocaleDateString("uk-UA", { day: "numeric", month: "long", year: "numeric" })}
                   </span>
                   <span className="inline-flex items-center gap-1">
                     <Clock className="h-3 w-3" />
@@ -111,6 +151,7 @@ const BlogPage = () => {
               </motion.article>
             ))}
           </div>
+          {visiblePosts.length === 0 && <p className="py-14 text-center text-foreground/60">За цими фільтрами матеріалів поки немає.</p>}
         </div>
       </section>
 

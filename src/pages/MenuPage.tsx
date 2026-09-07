@@ -10,8 +10,8 @@ const MenuPage = () => (
   <SiteLayout
     seo={
       <SEO
-        title="Меню — домашні напівфабрикати Галя Балувана"
-        description="Повний асортимент по категоріях: вареники, пельмені, млинці, сирники, чебуреки, голубці, котлети, піца, випічка ручного ліплення."
+        title="Меню Галя Балувана Чернівці — каталог домашніх напівфабрикатів"
+        description="Повний асортимент по категоріях: вареники, пельмені, млинці, сирники, чебуреки, голубці, котлети, випічка ручного ліплення у Чернівцях."
         path="/menu"
         jsonLd={[
           {
@@ -27,8 +27,20 @@ const MenuPage = () => (
     }
   >
     <div className="gb-page mx-auto max-w-7xl px-6 py-16 md:px-12 lg:px-20">
-      <h1>Меню <b>Галя Балувана</b></h1>
-      <p className="gb-page__lead">Перелік усієї продукції. Оберіть місто та магазин, щоб побачити актуальні ціни та наявність.</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1>Меню <b>Галя Балувана Чернівці</b></h1>
+          <p className="gb-page__lead">
+            Повний асортимент свіжих напівфабрикатів ручного ліплення: обирайте улюблені страви, дивіться склад, КБЖУ та рекомендації щодо приготування.
+          </p>
+        </div>
+        <Link
+          to="/shops"
+          className="inline-flex items-center gap-1.5 self-start md:self-auto rounded-xl bg-primary/10 border border-primary/20 px-4 py-2 text-xs font-bold text-primary hover:bg-primary hover:text-primary-foreground transition"
+        >
+          14 магазинів у Чернівцях →
+        </Link>
+      </div>
 
       <div className="mt-8 flex flex-wrap gap-2">
         {categoriesSorted.map((c) => (
@@ -50,7 +62,7 @@ const MenuPage = () => (
               to={`/menu/${c.slug}`}
               className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
             >
-              Усі <ArrowRight size={15} />
+              Усі страви категорії <ArrowRight size={15} />
             </Link>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">{c.blurb}</p>

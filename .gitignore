@@ -42,6 +42,7 @@ dist-ssr
 playwright-report
 test-results
 coverage
+output/
 
 # Intake folder for raw photos before optimisation
 _incoming/

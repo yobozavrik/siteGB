@@ -27,19 +27,22 @@ const OfficialHome = () => (
     <section className="gb-banner">
       <div className="gb-container gb-banner__inner">
         <div className="gb-banner__copy">
-          <h1>Найпопулярніші страви у <b>Галя Балувана</b></h1>
+          <div className="inline-block mb-3 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+            м. Чернівці
+          </div>
+          <h1>Домашні напівфабрикати ручного ліплення у <b>Чернівцях</b></h1>
           <div className="gb-banner__actions">
-            <Link to="/shops" className="gb-button">Знайти магазин</Link>
+            <Link to="/shops" className="gb-button">14 магазинів у Чернівцях</Link>
             <Link to="/menu" className="gb-text-link">Перейти до меню <ArrowRight size={17} /></Link>
           </div>
         </div>
-        <img src={storage("5LvLX25B2scRahWW3At6nj5Dp3X4OdhZbiQxPJ8C.jpg")} alt="Найпопулярніші страви Галя Балувана" />
+        <img src={storage("5LvLX25B2scRahWW3At6nj5Dp3X4OdhZbiQxPJ8C.jpg")} alt="Найпопулярніші страви Галя Балувана Чернівці" />
       </div>
     </section>
 
     <section className="gb-section gb-container">
-      <h2>Меню <b>Галя Балувана</b></h2>
-      <p className="gb-lead">Для того, щоб подивитись меню з цінами, необхідно перейти в розділ «Меню» та обрати місто.</p>
+      <h2>Меню <b>Галя Балувана Чернівці</b></h2>
+      <p className="gb-lead">Ознайомтеся з повним асортиментом напівфабрикатів ручного ліплення: вареники, пельмені, млинці, сирники, котлети та випічка.</p>
       <div className="gb-categories">
         {categories.map(([title, slug, image]) => (
           <Link key={slug} to={`/menu/${slug}`} className="gb-category">
@@ -48,23 +51,23 @@ const OfficialHome = () => (
           </Link>
         ))}
       </div>
-      <div className="gb-center"><Link to="/menu" className="gb-button">Перейти до меню</Link></div>
+      <div className="gb-center"><Link to="/menu" className="gb-button">Відкрити все меню</Link></div>
     </section>
 
     <section className="gb-section gb-container gb-why">
-      <img src={`${official}/images/why-galya.jpg`} alt="Відкрите виробництво Галя Балувана" />
+      <img src={`${official}/images/why-galya.jpg`} alt="Відкрите виробництво Галя Балувана Чернівці" />
       <div>
-        <h2>Чому саме <b>Галя Балувана</b>?</h2>
+        <h2>Чому обирають <b>Галя Балувана</b>?</h2>
         <div className="gb-reasons">
-          <p><strong>Висока</strong> якість</p>
-          <p><strong>Широкий</strong> асортимент</p>
-          <p><strong>Відкрите</strong> виробництво</p>
+          <p><strong>Відкрита кухня</strong> — виробництво за склом просто у магазині</p>
+          <p><strong>100% ручна робота</strong> — домашнє ліплення з добірних інгредієнтів</p>
+          <p><strong>Швидко та смачно</strong> — готова вечеря для всієї родини за 10 хвилин</p>
         </div>
       </div>
     </section>
 
     <section className="gb-section gb-container">
-      <div className="gb-section-head"><h2>Наші <b>Новини</b></h2><Link to="/blog" className="gb-text-link">Усі статті <ArrowRight size={17} /></Link></div>
+      <div className="gb-section-head"><h2>Корисні статті та <b>Новини</b></h2><Link to="/blog" className="gb-text-link">Усі матеріали <ArrowRight size={17} /></Link></div>
       <div className="gb-posts">
         {posts.map(([title, date, image]) => (
           <Link to="/blog" key={title} className="gb-post"><img src={storage(image)} alt="" /><span>{title}</span><small>{date}</small></Link>
@@ -74,13 +77,24 @@ const OfficialHome = () => (
 
     <section className="gb-section gb-shops">
       <div className="gb-container gb-shops__inner">
-        <div><h2>Наші <b>Магазини</b></h2><p>Оберіть своє місто та знайдіть найближчий магазин.</p><Link to="/shops" className="gb-button">Знайти магазин за містом</Link></div>
-        <div className="gb-map-placeholder"><MapPin size={42} /><span>Мапа магазинів</span></div>
+        <div>
+          <h2>Локації у <b>Чернівцях</b></h2>
+          <p>Знайдіть найближчий магазин у вашому районі: Південний, Проспект, Гравітон, Центр, Головна, Калинівський ринок.</p>
+          <Link to="/shops" className="gb-button">Переглянути 14 магазинів</Link>
+        </div>
+        <div className="gb-map-placeholder"><MapPin size={42} /><span>Чернівці · 14 локацій</span></div>
       </div>
     </section>
 
     <section className="gb-stats">
-      <div className="gb-container"><h2>Щодня ми встановлюємо для себе нові <b>Рекорди</b></h2><div><p><strong>700</strong><span>Магазинів в Україні</span></p><p><strong>9000</strong><span>Робочих місць</span></p><p><strong>200+</strong><span>Різноманітних страв</span></p></div></div>
+      <div className="gb-container">
+        <h2>Створено з любов'ю для <b>Чернівчан</b></h2>
+        <div>
+          <p><strong>14</strong><span>Магазинів у Чернівцях</span></p>
+          <p><strong>100%</strong><span>Ручне ліплення</span></p>
+          <p><strong>200+</strong><span>Різноманітних страв</span></p>
+        </div>
+      </div>
     </section>
   </main>
 );

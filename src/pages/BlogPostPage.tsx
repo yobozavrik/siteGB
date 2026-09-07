@@ -17,7 +17,7 @@ const BlogPostPage = () => {
   if (!post) return <Navigate to="/blog" replace />;
 
   const url = `${SITE_URL}/blog/${post.slug}`;
-  const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const related = blogPosts.filter((p) => p.slug !== post.slug && p.type === post.type).slice(0, 3);
 
   const jsonLd = [
     {
@@ -70,7 +70,7 @@ const BlogPostPage = () => {
             <div className="flex flex-wrap items-center gap-3 text-xs text-foreground/50 mb-4">
               <span className="inline-flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
-                {new Date(post.date).toLocaleDateString("uk-UA", { day: "numeric", month: "long", year: "numeric" })}
+                {post.displayDate ?? new Date(post.date).toLocaleDateString("uk-UA", { day: "numeric", month: "long", year: "numeric" })}
               </span>
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-3 w-3" />
@@ -115,11 +115,16 @@ const BlogPostPage = () => {
           </div>
 
           <div className="mt-12 glass-card p-8 text-center">
-            <h2 className="text-2xl font-bold mb-3">Замовити напівфабрикати</h2>
-            <p className="text-foreground/60 mb-6">Домашнє ручного ліплення — з доставкою або самовивозом.</p>
-            <Link to="/menu" className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition">
-              Перейти до меню
-            </Link>
+            <h2 className="text-2xl font-bold mb-3">Завітайте до магазинів у Чернівцях</h2>
+            <p className="text-foreground/60 mb-6">Домашні страви ручного ліплення — 14 фірмових точок у місті.</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link to="/shops" className="inline-block px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition">
+                Магазини у Чернівцях
+              </Link>
+              <Link to="/menu" className="inline-block px-6 py-3 rounded-full border border-border bg-background text-foreground font-semibold hover:border-primary transition">
+                Переглянути меню
+              </Link>
+            </div>
           </div>
 
           {related.length > 0 && (

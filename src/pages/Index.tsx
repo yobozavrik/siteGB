@@ -31,7 +31,7 @@ const jsonLd = [
     image: `${SITE_URL}/og-image.jpg`,
     telephone: PHONE,
     priceRange: "₴₴",
-    address: { "@type": "PostalAddress", addressCountry: "UA", addressLocality: "Київ" },
+    address: { "@type": "PostalAddress", addressCountry: "UA", addressLocality: "Чернівці" },
   },
   {
     "@context": "https://schema.org",
@@ -69,8 +69,8 @@ const Index = () => (
     offsetHeader={false}
     seo={
       <SEO
-        title="Галя Балувана — домашні напівфабрикати ручного ліплення"
-        description="Вареники, пельмені, млинці, сирники, голубці, котлети ручного ліплення. Асортимент по категоріях, карта магазинів, рецепти."
+        title="Галя Балувана Чернівці — домашні напівфабрикати ручного ліплення"
+        description="Вареники, пельмені, млинці, сирники, голубці, котлети ручного ліплення у Чернівцях. Каталог продукції, адреси 14 магазинів у місті, відкрита кухня."
         path="/"
         jsonLd={jsonLd}
       />
