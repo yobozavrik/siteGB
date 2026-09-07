@@ -4,14 +4,16 @@ import { ArrowRight, MapPin } from "lucide-react";
 const official = "https://galia-baluvana.com";
 
 const categories = [
-  ["Гомілки - Нагетси", "homilky", "bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9/bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9_res600x400_opt.jpg"],
-  ["Млинці - Вареники", "mlyntsi-vareniki", "KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM/KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM_res600x400_opt.jpg"],
-  ["Картопляні вироби", "kartoplyani", "XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2/XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2_res600x400_opt.jpg"],
-  ["Ковбаси · Паштет", "kovbasy", "2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY/2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY_res600x400_opt.jpg"],
-  ["Котлети · Тефтелі", "kotlety", "7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U/7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U_res600x400_opt.jpg"],
-  ["Пельмені - Хінкалі", "pelmeni", "heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4/heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4_res600x400_opt.jpg"],
-  ["Піца - Пироги", "pizza-pyrohy", "btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR/btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR_res600x400_opt.jpg"],
+  ["Вареники", "vareniki", "KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM/KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM_res600x400_opt.jpg"],
+  ["Пельмені та хінкалі", "pelmeni", "heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4/heUByTjRCe5gFfKrRkKrUYwv8PQVtncVrjuqK9i4_res600x400_opt.jpg"],
+  ["Млинці та бендерики", "mlyntsi", "KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM/KdMZjg5dZ5QG6uQr7GodVtCN6UxR0n9kxekcYvuM_res600x400_opt.jpg"],
   ["Сирники", "syrnyky", "1Vq3uTefVtVUIM2zSMETMnqqUVcWrX5YDHxI4dtf/1Vq3uTefVtVUIM2zSMETMnqqUVcWrX5YDHxI4dtf_res600x400_opt.jpg"],
+  ["Котлети та тефтелі", "kotlety", "7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U/7FojIlejzfiFGAAIbyc90zp23Q3zAOv99aZfzZ6U_res600x400_opt.jpg"],
+  ["Голубці та перець", "golubtsi", "XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2/XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2_res600x400_opt.jpg"],
+  ["Піца та випічка", "pizza-pyrohy", "btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR/btGbtGY39D1Bm0LCrdLVvrOlmMDnGwgs5EXUeQjR_res600x400_opt.jpg"],
+  ["Картопляні вироби", "kartoplyani", "XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2/XexPEvNeq9NWpZFWzuWcSM8hyHCJoWsuRfFpi3F2_res600x400_opt.jpg"],
+  ["Гомілки та нагетси", "homilky", "bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9/bIGFP4fRUb6dtdv8aytk7MN4gr6F6NlPvvkpBDm9_res600x400_opt.jpg"],
+  ["Ковбаси та паштет", "kovbasy", "2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY/2kqR3c2V2AKIqm1reEpzBTfXQxL7USblQwlJm1gY_res600x400_opt.jpg"],
 ] as const;
 
 const posts = [
