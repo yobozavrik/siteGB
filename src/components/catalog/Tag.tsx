@@ -4,7 +4,7 @@ import { TAG_LABELS } from "@/data/catalog";
 const tone: Record<ProductTag, string> = {
   hit: "bg-primary text-primary-foreground",
   new: "bg-stone-900 text-white",
-  lenten: "bg-apple text-white",
+  lenten: "bg-olive text-white",
   spicy: "bg-secondary text-secondary-foreground",
 };
 

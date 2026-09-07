@@ -11,11 +11,40 @@ export interface Shop {
   features: string[];
   x: number; // relative map coordinate %
   y: number;
+  /** Real geo coordinates for the Google map. */
+  lat: number;
+  lng: number;
   isProduction: boolean; // cooking workshop behind glass on site
   mapQuery?: string;
 }
 
-export const shops: Shop[] = [
+/**
+ * Approximate coordinates per address, keyed by shop id.
+ * VERIFY against Google Business / Poster before production — these are
+ * street-level estimates for Chernivtsi, accurate enough to place a pin
+ * in the right neighbourhood but not the exact doorway.
+ */
+const COORDS: Record<string, { lat: number; lng: number }> = {
+  "cv-maidanu-57": { lat: 48.268, lng: 25.954 },
+  "cv-nezalezhnosti-52a": { lat: 48.2921, lng: 25.949 },
+  "cv-entuziastiv-5a": { lat: 48.266, lng: 25.936 },
+  "cv-ruska-219": { lat: 48.305, lng: 25.972 },
+  "cv-ruska-255": { lat: 48.308, lng: 25.976 },
+  "cv-shcherbaniuka-2": { lat: 48.288, lng: 25.943 },
+  "cv-bukovynska-62a": { lat: 48.301, lng: 25.926 },
+  "cv-holovna-226": { lat: 48.2585, lng: 25.949 },
+  "cv-franka-26": { lat: 48.296, lng: 25.937 },
+  "cv-skalda-2a": { lat: 48.269, lng: 25.93 },
+  "cv-nebesnoi-sotni-18a": { lat: 48.284, lng: 25.926 },
+  "cv-hertsena-9": { lat: 48.29, lng: 25.931 },
+  "cv-komarova-32": { lat: 48.272, lng: 25.918 },
+  "cv-kalynivska-13v": { lat: 48.315, lng: 25.956 },
+};
+
+const withCoords = <T extends { id: string }>(list: T[]): (T & { lat: number; lng: number })[] =>
+  list.map((s) => ({ ...s, ...(COORDS[s.id] ?? { lat: 48.2917, lng: 25.9352 }) }));
+
+const rawShops: Omit<Shop, "lat" | "lng">[] = [
   {
     id: "cv-maidanu-57",
     city: "Чернівці",
@@ -199,6 +228,8 @@ export const shops: Shop[] = [
     mapQuery: "вулиця Калинівська, 13В, Чернівці",
   },
 ];
+
+export const shops: Shop[] = withCoords(rawShops);
 
 // ---------- derivatives ----------
 

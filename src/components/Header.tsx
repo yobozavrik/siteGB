@@ -24,7 +24,7 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2.5" aria-label="Галя Балувана Чернівці — на головну">
             <img
-              src="https://galia-baluvana.com/images/logo.svg"
+              src="/logo.svg"
               alt="Логотип Галя Балувана"
               width="152"
               height="48"

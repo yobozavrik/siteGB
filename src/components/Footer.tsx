@@ -39,12 +39,12 @@ const socials = [
 ];
 
 const Footer = () => (
-  <footer className="bg-stone-950 text-white border-t border-white/10 px-6 py-14">
+  <footer className="bg-ink text-paper border-t border-paper/10 px-6 py-14">
     <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div>
         <div className="flex items-center gap-2.5">
           <img
-            src="https://galia-baluvana.com/images/logo.svg"
+            src="/logo.svg"
             alt="Логотип Галя Балувана Чернівці"
             width="152"
             height="48"

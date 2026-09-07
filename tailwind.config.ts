@@ -15,7 +15,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Onest", "sans-serif"],
+        sans: ["Onest", "system-ui", "sans-serif"],
+        display: ["Fraunces", "Playfair Display", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,9 +52,11 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        grapefruit: "hsl(var(--grapefruit))",
-        orange: "hsl(var(--orange))",
-        apple: "hsl(var(--apple))",
+        clay: "hsl(var(--clay))",
+        olive: "hsl(var(--olive))",
+        honey: "hsl(var(--honey))",
+        ink: "hsl(var(--ink))",
+        paper: "hsl(var(--paper))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

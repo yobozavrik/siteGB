@@ -55,7 +55,7 @@ const BlogPostPage = () => {
       <Header />
       <CartDrawer />
 
-      <article className="pt-32 section-padding">
+      <article className="pt-28 section-padding">
         <div className="max-w-3xl mx-auto">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-primary mb-8">
             <ArrowLeft className="h-4 w-4" /> Назад до новин
@@ -81,24 +81,39 @@ const BlogPostPage = () => {
                 {post.category}
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black leading-tight mb-6">{post.title}</h1>
+            <h1 className="font-display text-4xl md:text-5xl font-medium leading-tight mb-6">{post.title}</h1>
             <p className="text-lg text-foreground/70 leading-relaxed">{post.description}</p>
           </motion.header>
 
           <div className="prose-content space-y-6">
             {post.content.map((block, idx) => {
-              if (block.type === "p") return <p key={idx} className="text-foreground/80 leading-relaxed text-lg">{block.text}</p>;
-              if (block.type === "h2") return <h2 key={idx} className="text-2xl md:text-3xl font-bold mt-10 mb-2">{block.text}</h2>;
-              if (block.type === "h3") return <h3 key={idx} className="text-xl font-bold mt-6 mb-1">{block.text}</h3>;
+              if (block.type === "p")
+                return (
+                  <p
+                    key={idx}
+                    className={`text-lg leading-relaxed text-foreground/80 ${
+                      idx === 0
+                        ? "first-letter:float-left first-letter:mr-2 first-letter:font-display first-letter:text-[3.4rem] first-letter:font-medium first-letter:leading-[0.8] first-letter:text-primary"
+                        : ""
+                    }`}
+                  >
+                    {block.text}
+                  </p>
+                );
+              if (block.type === "h2") return <h2 key={idx} className="font-display text-2xl md:text-3xl font-medium mt-10 mb-2">{block.text}</h2>;
+              if (block.type === "h3") return <h3 key={idx} className="font-display text-xl font-medium mt-6 mb-1">{block.text}</h3>;
               if (block.type === "ul")
                 return (
-                  <ul key={idx} className="space-y-2 pl-5 list-disc text-foreground/80">
+                  <ul key={idx} className="space-y-2 pl-5 list-disc marker:text-secondary text-foreground/80">
                     {block.items.map((it, i) => <li key={i}>{it}</li>)}
                   </ul>
                 );
               if (block.type === "quote")
                 return (
-                  <blockquote key={idx} className="border-l-4 border-primary pl-5 italic text-foreground/70 text-lg">
+                  <blockquote
+                    key={idx}
+                    className="my-8 border-l-2 border-secondary pl-6 font-display text-xl font-medium leading-snug text-foreground"
+                  >
                     {block.text}
                   </blockquote>
                 );

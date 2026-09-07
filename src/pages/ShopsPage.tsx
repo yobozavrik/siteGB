@@ -1,35 +1,73 @@
-import { useState, useMemo } from "react";
-import { MapPin, Clock, Phone, Search, ExternalLink, Sparkles } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
+import { MapPin, Clock, Phone, Search, ExternalLink, Sparkles, X } from "lucide-react";
 import SiteLayout from "@/components/SiteLayout";
 import SEO from "@/components/SEO";
+import ShopsMap from "@/components/ShopsMap";
 import { shops, districts, totalShops, productionShops } from "@/data/shops";
 import { SITE_URL, PHONE_DISPLAY, PHONE } from "@/config/site";
 
+const ALL = "Усі райони";
+const tel = (p: string) => `tel:${p.replace(/[\s()\-]/g, "")}`;
+const mapsUrl = (address: string, city: string, query?: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query || `${address}, ${city}`)}`;
+
 const ShopsPage = () => {
-  const [selectedDistrict, setSelectedDistrict] = useState<string>("Усі райони");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [onlyProduction, setOnlyProduction] = useState<boolean>(false);
+  const [params, setParams] = useSearchParams();
+  const reduce = useReducedMotion();
 
-  const filteredShops = useMemo(() => {
+  const [selectedDistrict, setSelectedDistrict] = useState(ALL);
+  const [query, setQuery] = useState("");
+  const [onlyProduction, setOnlyProduction] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(params.get("shop"));
+
+  const cardRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
     return shops.filter((s) => {
-      const matchDistrict = selectedDistrict === "Усі райони" || s.district.includes(selectedDistrict);
+      const matchDistrict = selectedDistrict === ALL || s.district.includes(selectedDistrict);
       const matchSearch =
-        searchQuery.trim() === "" ||
-        s.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        s.district.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        s.features.some((f) => f.toLowerCase().includes(searchQuery.toLowerCase()));
+        q === "" ||
+        s.address.toLowerCase().includes(q) ||
+        s.district.toLowerCase().includes(q) ||
+        s.features.some((f) => f.toLowerCase().includes(q));
       const matchProduction = !onlyProduction || s.isProduction;
-
       return matchDistrict && matchSearch && matchProduction;
     });
-  }, [selectedDistrict, searchQuery, onlyProduction]);
+  }, [selectedDistrict, query, onlyProduction]);
+
+  // Keep ?shop= in the URL so a chosen store is shareable / deep-linkable.
+  useEffect(() => {
+    const next = new URLSearchParams(params);
+    if (activeId) next.set("shop", activeId);
+    else next.delete("shop");
+    if (next.toString() !== params.toString()) setParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeId]);
+
+  // Scroll the matching card into view when a pin is picked on the map.
+  useEffect(() => {
+    if (!activeId) return;
+    const el = cardRefs.current[activeId];
+    if (el) el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
+  }, [activeId, reduce]);
+
+  const resetFilters = () => {
+    setSelectedDistrict(ALL);
+    setQuery("");
+    setOnlyProduction(false);
+  };
+
+  const activeShop = activeId ? shops.find((s) => s.id === activeId) : null;
 
   return (
     <SiteLayout
       seo={
         <SEO
           title="Магазини Галя Балувана у Чернівцях — адреси, графік роботи та телефони"
-          description={`Мережа ${totalShops} магазинів домашніх напівфабрикатів у Чернівцях. Адреси, графік роботи, відкрите виробництво за склом та телефони.`}
+          description={`Мережа ${totalShops} магазинів домашніх напівфабрикатів у Чернівцях. Інтерактивна мапа, адреси, графік роботи, відкрите виробництво за склом і телефони.`}
           path="/shops"
           jsonLd={[
             {
@@ -40,181 +78,223 @@ const ShopsPage = () => {
                 { "@type": "ListItem", position: 2, name: "Магазини", item: `${SITE_URL}/shops` },
               ],
             },
+            {
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              itemListElement: shops.map((s, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                item: {
+                  "@type": "GroceryStore",
+                  name: `Галя Балувана — ${s.address}`,
+                  address: { "@type": "PostalAddress", streetAddress: s.address, addressLocality: s.city, addressCountry: "UA" },
+                  telephone: s.phone,
+                  geo: { "@type": "GeoCoordinates", latitude: s.lat, longitude: s.lng },
+                },
+              })),
+            },
           ]}
         />
       }
     >
-      <div className="gb-page mx-auto max-w-7xl px-6 py-16 md:px-12 lg:px-20">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary mb-3">
-              <MapPin size={14} /> Місто Чернівці
-            </div>
-            <h1>Наші <b>Магазини у Чернівцях</b></h1>
-            <p className="gb-page__lead">
-              {totalShops} фірмових магазинів у різних районах міста. У {productionShops.length} із них страви ліплять просто на ваших очах на кухні «за склом».
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href={`tel:${PHONE}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-sm hover:opacity-90 transition"
-            >
-              <Phone size={16} /> Гаряча лінія: {PHONE_DISPLAY}
-            </a>
-          </div>
-        </div>
+      <div className="gb-page mx-auto max-w-7xl px-6 py-14 md:px-10 lg:px-16">
+        <header className="max-w-2xl">
+          <span className="eyebrow">
+            <MapPin size={13} /> Місто Чернівці
+          </span>
+          <h1 className="mt-3">
+            Магазини <b>у Чернівцях</b>
+          </h1>
+          <p className="gb-page__lead">
+            {totalShops} фірмових магазинів у різних районах міста. У {productionShops.length} із них страви ліплять
+            просто на ваших очах — на кухні «за склом».
+          </p>
+        </header>
 
-        {/* Filters & Search */}
-        <div className="mt-8 rounded-2xl bg-muted/40 p-6 border border-border/70">
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
-            {/* Search Input */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+          {/* ---- Left: filters + list ------------------------------------ */}
+          <div className="order-2 lg:order-1">
+            {/* Search */}
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Пошук за вулицею або районом (наприклад: Майдан, Руська, Центр)..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-xl border border-border bg-background py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+                inputMode="search"
+                placeholder="Пошук за вулицею, районом або послугою…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                aria-label="Пошук магазину"
+                className="w-full rounded-xl border border-border bg-card py-3 pl-11 pr-10 text-sm outline-none transition focus:border-secondary focus:ring-4 focus:ring-secondary/15"
               />
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  aria-label="Очистити пошук"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground hover:text-foreground"
+                >
+                  <X size={15} />
+                </button>
+              )}
             </div>
 
-            {/* Toggle production only */}
-            <button
-              type="button"
-              onClick={() => setOnlyProduction(!onlyProduction)}
-              className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-bold transition whitespace-nowrap ${
-                onlyProduction
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-background text-foreground/80 hover:border-primary/50"
-              }`}
-            >
-              <Sparkles size={14} /> Тільки відкрита кухня за склом ({productionShops.length})
-            </button>
-          </div>
-
-          {/* District buttons */}
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-muted-foreground mr-1">Район:</span>
-            {districts.map((d) => (
+            {/* District chips + production toggle */}
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              {districts.map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  className="gb-filter"
+                  data-active={selectedDistrict === d}
+                  onClick={() => setSelectedDistrict(d)}
+                >
+                  {d}
+                </button>
+              ))}
               <button
-                key={d}
                 type="button"
-                onClick={() => setSelectedDistrict(d)}
-                className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-                  selectedDistrict === d
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "bg-background border border-border text-foreground/70 hover:border-primary/50"
-                }`}
+                className="gb-filter inline-flex items-center gap-1.5"
+                data-active={onlyProduction}
+                onClick={() => setOnlyProduction((v) => !v)}
               >
-                {d}
+                <Sparkles size={13} /> Кухня за склом ({productionShops.length})
               </button>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        {/* Store Cards Grid */}
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold text-muted-foreground">
-              Знайдено локацій: <span className="text-foreground font-bold">{filteredShops.length}</span>
+            <p className="mt-5 text-sm font-semibold text-muted-foreground">
+              Знайдено локацій: <span className="text-foreground">{filtered.length}</span> із {totalShops}
             </p>
+
+            {filtered.length === 0 ? (
+              <div className="mt-4 rounded-2xl border border-dashed border-border bg-card p-10 text-center">
+                <MapPin className="mx-auto mb-3 h-8 w-8 text-muted-foreground/50" />
+                <p className="font-semibold text-foreground">Нічого не знайшлося за цим запитом</p>
+                <p className="mx-auto mt-1 max-w-xs text-sm text-muted-foreground">
+                  Спробуйте іншу вулицю або оберіть район зі списку вище — наприклад «Центр», «Південний» чи
+                  «Гравітон».
+                </p>
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="mt-4 text-sm font-semibold text-primary hover:underline"
+                >
+                  Скинути фільтри
+                </button>
+              </div>
+            ) : (
+              <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+                {filtered.map((s, i) => {
+                  const isActive = s.id === activeId;
+                  return (
+                    <motion.li
+                      key={s.id}
+                      ref={(el) => {
+                        cardRefs.current[s.id] = el;
+                      }}
+                      initial={reduce ? false : { opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
+                      transition={{ duration: 0.35, delay: Math.min(i, 6) * 0.04 }}
+                    >
+                      <article
+                        onMouseEnter={() => setActiveId(s.id)}
+                        onFocusCapture={() => setActiveId(s.id)}
+                        className={`flex h-full flex-col justify-between rounded-2xl border bg-card p-5 transition-all ${
+                          isActive
+                            ? "border-secondary shadow-[0_16px_40px_-24px_hsl(25_22%_11%/0.35)]"
+                            : "border-border hover:border-secondary/60"
+                        }`}
+                      >
+                        <div>
+                          <div className="mb-2 flex flex-wrap items-center gap-1.5">
+                            <span className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground">
+                              {s.district}
+                            </span>
+                            {s.isProduction && (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
+                                <Sparkles size={11} /> Кухня за склом
+                              </span>
+                            )}
+                          </div>
+
+                          <h2 className="flex items-start gap-2 text-base font-bold leading-snug text-foreground">
+                            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secondary" />
+                            <span>{s.address}</span>
+                          </h2>
+
+                          <p className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
+                            <Clock className="h-4 w-4 shrink-0 text-foreground/50" />
+                            {s.hours}
+                          </p>
+                          <p className="mt-1.5 flex items-center gap-2 text-sm">
+                            <Phone className="h-4 w-4 shrink-0 text-foreground/50" />
+                            <a href={tel(s.phone)} className="font-semibold text-foreground hover:text-primary">
+                              {s.phone}
+                            </a>
+                          </p>
+
+                          {s.features.length > 0 && (
+                            <div className="mt-3 flex flex-wrap gap-1.5">
+                              {s.features.map((f) => (
+                                <span
+                                  key={f}
+                                  className="rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium text-foreground/70"
+                                >
+                                  {f}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mt-4 flex items-center justify-between gap-3 border-t border-border/70 pt-3">
+                          <button
+                            type="button"
+                            onClick={() => setActiveId(s.id)}
+                            className="text-xs font-semibold text-secondary hover:text-primary"
+                          >
+                            Показати на мапі
+                          </button>
+                          <a
+                            href={mapsUrl(s.address, s.city, s.mapQuery)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                          >
+                            <ExternalLink size={12} /> Google Maps
+                          </a>
+                        </div>
+                      </article>
+                    </motion.li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
 
-          {filteredShops.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-border p-12 text-center text-muted-foreground">
-              <MapPin className="mx-auto h-8 w-8 text-muted-foreground/50 mb-2" />
-              <p className="font-semibold">За вашим запитом магазинів не знайдено</p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedDistrict("Усі райони");
-                  setSearchQuery("");
-                  setOnlyProduction(false);
-                }}
-                className="mt-3 text-xs font-bold text-primary hover:underline"
+          {/* ---- Right: sticky map ------------------------------------- */}
+          <div className="order-1 lg:order-2">
+            <div className="lg:sticky lg:top-24">
+              <ShopsMap shops={filtered} activeId={activeId} onSelect={setActiveId} className="h-[380px] lg:h-[560px]" />
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-primary" /> Кухня за склом
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-secondary" /> Магазин
+                </span>
+                {activeShop && (
+                  <span className="ml-auto font-semibold text-foreground">{activeShop.address}</span>
+                )}
+              </div>
+              <a
+                href={`tel:${PHONE}`}
+                className="btn-primary mt-4 w-full"
               >
-                Скинути фільтри
-              </button>
+                <Phone size={16} /> Гаряча лінія: {PHONE_DISPLAY}
+              </a>
             </div>
-          ) : (
-            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {filteredShops.map((s) => {
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  s.mapQuery || `${s.address}, ${s.city}`
-                )}`;
-
-                return (
-                  <article
-                    key={s.id}
-                    className="flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-sm hover:shadow-md transition-all group"
-                  >
-                    <div>
-                      <div className="flex items-start justify-between gap-2 mb-3">
-                        <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-bold text-primary">
-                          {s.district}
-                        </span>
-                        {s.isProduction && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 px-2.5 py-0.5 text-[11px] font-bold">
-                            <Sparkles size={11} /> Кухня за склом
-                          </span>
-                        )}
-                      </div>
-
-                      <h2 className="text-lg font-black text-foreground group-hover:text-primary transition-colors flex items-start gap-2">
-                        <MapPin className="mt-1 h-4 w-4 shrink-0 text-primary" />
-                        <span>{s.address}</span>
-                      </h2>
-
-                      <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-                        <p className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 shrink-0 text-foreground/60" />
-                          <span>{s.hours}</span>
-                        </p>
-                        <p className="flex items-center gap-2">
-                          <Phone className="h-4 w-4 shrink-0 text-foreground/60" />
-                          <a href={`tel:${s.phone.replace(/[\s()\-]/g, "")}`} className="font-semibold text-foreground hover:text-primary">
-                            {s.phone}
-                          </a>
-                        </p>
-                      </div>
-
-                      {s.features.length > 0 && (
-                        <div className="mt-4 flex flex-wrap gap-1.5">
-                          {s.features.map((f) => (
-                            <span
-                              key={f}
-                              className="rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium text-foreground/75"
-                            >
-                              {f}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between gap-3">
-                      <a
-                        href={mapsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline"
-                      >
-                        <ExternalLink size={13} /> Відкрити в Google Maps
-                      </a>
-                      <a
-                        href={`tel:${s.phone.replace(/[\s()\-]/g, "")}`}
-                        className="rounded-lg bg-muted px-3 py-1.5 text-xs font-bold text-foreground/80 hover:bg-primary hover:text-primary-foreground transition"
-                      >
-                        Зателефонувати
-                      </a>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </SiteLayout>

@@ -76,11 +76,11 @@ const CartPage = () => {
                 <span>розрахуємо при оформленні</span>
               </div>
               {toFree > 0 ? (
-                <p className="mt-3 rounded-lg bg-apple/10 px-3 py-2 text-xs font-semibold text-apple">
+                <p className="mt-3 rounded-lg bg-olive/10 px-3 py-2 text-xs font-semibold text-olive">
                   Додайте ще на {toFree} ₴ — і доставка безкоштовна
                 </p>
               ) : (
-                <p className="mt-3 rounded-lg bg-apple/10 px-3 py-2 text-xs font-semibold text-apple">
+                <p className="mt-3 rounded-lg bg-olive/10 px-3 py-2 text-xs font-semibold text-olive">
                   Безкоштовна доставка 🎉
                 </p>
               )}
